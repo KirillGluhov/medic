@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Flex, Layout } from 'antd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const { Header, Footer, Sider, Content } = Layout;
+
+const headerStyle: React.CSSProperties = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 64,
+  paddingInline: 48,
+  lineHeight: '64px',
+  backgroundColor: '#4096ff',
+};
+
+const contentStyle: React.CSSProperties = {
+  textAlign: 'center',
+  minHeight: 120,
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#0958d9',
+};
+
+const footerStyle: React.CSSProperties = {
+  textAlign: 'center',
+  color: '#fff',
+  backgroundColor: '#4096ff',
+};
+
+const layoutStyle = {
+  borderRadius: 8,
+  overflow: 'hidden',
+  width: 'calc(50% - 8px)',
+  maxWidth: 'calc(50% - 8px)',
+};
+
+const App: React.FC = () => (
+  <Flex gap="middle" wrap>
+    <Layout >
+      <Header >Header</Header>
+      <Content >Content</Content>
+      <Footer >Footer</Footer>
+    </Layout>
+  </Flex>
+);
 
 export default App;
