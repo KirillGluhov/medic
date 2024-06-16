@@ -1,6 +1,7 @@
-import { Card, Form } from 'antd';
-import { Layout, Flex, Typography, Button, Input, Tooltip } from 'antd';
+import { Card, Form, Layout, Flex, Typography, Button, Input, Tooltip } from 'antd';
 import type { FormProps } from 'antd';
+import axios from 'axios';
+import { baseUrl } from '../const/constValues';
 import { 
     loginCardStyle, 
     cardTitle, 
@@ -10,8 +11,14 @@ import {
     cardLabelStyle,
     cardButtonStyle,
     registrationButton,
-    boldText
+    boldText,
+    cardTextColor
 } from '../styles/additionalStyles';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { chooseErrorMessage } from '../functions/smallFunctions';
+import { useLogin } from '../context/LoginContext';
+import { useName } from '../context/NameContext';
 
 const {Paragraph, Title} = Typography;
 
@@ -23,14 +30,55 @@ type FieldType = {
 function LoginCard()
 {
     const [form] = Form.useForm();
+    const {isLogin, setIsLogin} = useLogin();
+    const {isName, setIsName} = useName();
+    const navigate = useNavigate();
+
+    const handleRegistration = () => {
+        navigate("/registration/")
+    }
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-        console.log('Success:', values);
+        axios.post(baseUrl + "doctor/login", values)
+        .then(function (response) 
+        {
+            console.log(response);
+            localStorage.setItem("token", response.data.token);
+            setIsLogin(true);
+
+            axios.get(baseUrl + "doctor/profile",
+                { 
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}` 
+                    } 
+                }
+            )
+            .then(response => {
+                console.log(response);
+                localStorage.setItem("name", response.data.name);
+                setIsName(response.data.name);
+                navigate("/patients/");
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        })
+        .catch(function (error) 
+        {
+            console.log(error);
+
+            form.setFields([
+                { name: 'email', errors: [chooseErrorMessage(error.response.data.message)] },
+                { name: 'password', errors: [chooseErrorMessage(error.response.data.message)] }
+            ]);
+
+        })
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
-      };
+    };
 
     return (
         <Card style={loginCardStyle}>
@@ -43,11 +91,10 @@ function LoginCard()
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 24 }}
                 requiredMark="optional"
+                layout="vertical"
             >
                 <Form.Item 
-                    label={
-                        <label style={{...cardLabelStyle}}>Email</label>
-                    }
+                    label="Email"
                     layout="vertical"
                     name="email"
                     rules={[
@@ -66,15 +113,23 @@ function LoginCard()
                         style={{...cardSizeStyle}}
                     />
                 </Form.Item>
-                <br />
                 <Form.Item 
-                    label={<label style={{...cardLabelStyle}}>Пароль</label>}
+                    label="Пароль"
                     layout="vertical"
                     name="password"
                     rules={[
                         {
                           required: true,
                           message: 'Пароль не должен быть пустым',
+                        },
+                        {
+                            validator(_, value) {
+                                if (value && value.length < 6) {
+                                  return Promise.reject('Пароль должен состоять хотя бы из 6 символов');
+                                }
+                                return Promise.resolve();
+                                
+                              },
                         }
                     ]}
                 >
@@ -82,7 +137,6 @@ function LoginCard()
                         style={{...cardSizeStyle}}
                     />
                 </Form.Item>
-                <br />
                 <Form.Item style={{...cardButtonWrraperStyle}}>
                     <Button 
                         htmlType='submit' 
@@ -110,6 +164,7 @@ function LoginCard()
                                 ...boldText
                             }
                         }
+                        onClick={handleRegistration}
                     >
                         Регистрация
                     </Button>

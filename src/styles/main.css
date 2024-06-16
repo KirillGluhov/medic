@@ -1,4 +1,134 @@
+:root
+{
+    --cardTextColor: #EFEFF5;
+    --secondColor: #317cb9;
+    --grayColor: #aaabb5;
+}
+
 body
 {
     margin: 0;
+    min-width: 500px;
+}
+
+label.ant-form-item-required-mark-optional
+{
+    color: rgb(45, 88, 152) !important
+}
+
+.ant-card-body
+{
+    padding-bottom: 0 !important;
+}
+
+.ant-select-suffix
+{
+    color: black;
+}
+
+.ant-picker
+{
+    width: 100%;
+}
+
+.ant-picker-input input::placeholder {
+    color: rgb(0, 0, 0) !important;
+}
+
+#phone
+{
+    padding: 0;
+    width: 100%;
+    border-width: 0;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #d9d9d9;
+    border-style: solid;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    font-family: 'Arial';
+}
+
+#phone:hover, #phone:active, #phone:focus-visible
+{
+    border-color: #4096ff;
+    border-style: solid;
+    border-width: 1px;
+    outline: none;
+}
+
+.ant-switch-checked
+{
+    background-color: var(--secondColor) !important;
+}
+
+@media (min-width: 1200px) {
+    .ant-form-item-control-input-content:has(.myPatients) {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 992px) {
+    .headerTop {
+        height: 60px;
+    }
+}
+
+@media (max-width: 991px) {
+    .headerTop {
+        height: 120px;
+    }
+}
+
+@media (min-width: 992px) {
+    .colTop {
+        height: 100%;
+    }
+}
+
+@media (max-width: 991px) {
+    .colTop {
+        height: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    .colTop.name {
+        justify-content: end;
+    }
+}
+
+@media (max-width: 991px) {
+    .colTop.name {
+        justify-content: start;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .ant-col:has(.myPatients)
+    {
+        justify-content: center;
+    }
+}
+
+label
+{
+    color: var(--grayColor) !important;
+}
+
+.pagination:hover
+{
+    color: var(--secondColor) !important;
+    border-color: var(--secondColor) !important;
+}
+
+.pagination
+{
+    padding: 0;
+    height: 32px;
+    width: 32px;
 }

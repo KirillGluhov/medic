@@ -1,0 +1,1 @@
+export const baseUrl = "https://mis-api.kreosoft.space/api/"
