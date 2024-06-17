@@ -320,3 +320,7 @@ export const flexCentered: React.CSSProperties = {
 export const flexGapStyle: React.CSSProperties = {
     gap: 10
 }
+
+export const width100: React.CSSProperties = {
+    flexGrow: 1
+}

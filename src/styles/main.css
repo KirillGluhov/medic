@@ -132,3 +132,21 @@ label
     height: 32px;
     width: 32px;
 }
+
+.pagination.clicked
+{
+    border-color: var(--secondColor);
+    background-color: transparent;
+    color: var(--secondColor) !important;
+}
+
+
+.pagination.clicked:hover, .pagination.clicked:active
+{
+    background-color: transparent !important;
+}
+
+.ant-modal-content
+{
+    padding-bottom: 1px !important;
+}

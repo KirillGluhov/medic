@@ -5,16 +5,28 @@ import {
     spanBlackColor,
     spanCardStyle
 } from "../styles/additionalStyles";
+import { Patient } from "./PatientCardWrapper";
+import { changeFormat } from "../functions/smallFunctions";
+
+interface PatientsCardProps
+{
+    patient: Patient;
+}
 
 const {Paragraph, Title} = Typography;
 
-function PatientCard()
+const PatientCard: React.FC<PatientsCardProps> = ({patient}) =>
 {
     return (<Card style={filterCardStyle}>
-        <Title style={{...smallTitleStyle, ...spanBlackColor}}>Кашафутдинов Ильдар Александрович</Title>
-        <p><span style={spanCardStyle}>Email - </span>ilda1999@mail.ru</p>
-        <p><span style={spanCardStyle}>Пол - </span>Мужчина</p>
-        <p><span style={spanCardStyle}>Дата рождения - </span>26.02.1991</p>
+        <Title style={{...smallTitleStyle, ...spanBlackColor}}>{patient.name}</Title>
+        <p><span style={spanCardStyle}>Пол - </span>{
+            (patient.gender == "Male") ? 
+            "Мужчина" : 
+            (patient.gender == "Female") ? 
+            "Женщина" : 
+            null
+        }</p>
+        <p><span style={spanCardStyle}>Дата рождения - </span>{patient.birthday ? changeFormat(patient.birthday) : "Не указано"}</p>
     </Card>);
 }
 

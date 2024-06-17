@@ -14,65 +14,226 @@ import {
     spanStyle,
     spanCardStyle
 } from "../styles/additionalStyles";
-import { useLocation } from 'react-router-dom';
-import { generateValues } from "../functions/smallFunctions";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { existTypeOfConclusion, generateValues, isNatural, isNaturalNumberInRange } from "../functions/smallFunctions";
 import { useEffect } from "react";
+import axios from "axios";
+import { baseUrl } from "../const/constValues";
+import type { FormProps } from 'antd';
 
 const {Paragraph, Title} = Typography;
 
-function FilterCard()
+interface FilterCardProps
 {
-    const location = useLocation();
-    const [form] = Form.useForm();
+    filterValues: {
+        name?: string;
+        conclusions?: string[];
+        scheduledVisits?: boolean;
+        onlyMine?: boolean;
+        sorting?: string;
+        size?: number
+    };
+}
 
-    const onFinishFailed = (errorInfo: any) => {
+type FilterType = {
+    name?: string | null,
+    conclusions?: string[] | null,
+    scheduledVisits?: boolean | null,
+    onlyMine?: boolean | null,
+    sorting?: string | null,
+    size?: string | null
+
+};
+
+const FilterCard: React.FC<FilterCardProps> = ({filterValues}) =>
+{
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        if (filterValues)
+        {
+            if (filterValues.name)
+            {
+                form.setFields([
+                    {
+                        name: "name",
+                        value: filterValues.name
+                    }
+                ]);
+            }
+            else
+            {
+                form.setFields([
+                    {
+                        name: "name",
+                        value: undefined
+                    }
+                ]);
+            }
+
+            if (filterValues.conclusions)
+            {
+                form.setFieldsValue({
+                    conclusions: filterValues.conclusions,
+                });
+            }
+            else
+            {
+                form.setFieldsValue({
+                    conclusions: undefined,
+                });
+            }
+
+            if (filterValues.scheduledVisits)
+            {
+                form.setFields([
+                    {
+                        name: "scheduledVisits",
+                        value: filterValues.scheduledVisits
+                    }
+                ]);
+            }
+            else
+            {
+                form.setFields([
+                    {
+                        name: "scheduledVisits",
+                        value: undefined
+                    }
+                ]);
+            }
+
+            if (filterValues.onlyMine)
+            {
+                form.setFields([
+                    {
+                        name: "onlyMine",
+                        value: filterValues.onlyMine
+                    }
+                ]);
+            }
+            else
+            {
+                form.setFields([
+                    {
+                        name: "onlyMine",
+                        value: undefined
+                    }
+                ]);
+            }
+
+            if (filterValues.sorting)
+            {
+                form.setFields([
+                    {
+                        name: "sorting",
+                        value: filterValues.sorting
+                    }
+                ]);
+            }
+            else
+            {
+                form.setFields([
+                    {
+                        name: "sorting",
+                        value: undefined
+                    }
+                ]);
+            }
+
+            if (filterValues.size)
+            {
+                form.setFields([
+                    {
+                        name: "size",
+                        value: filterValues.size
+                    }
+                ]);
+            }
+            else
+            {
+                form.setFields([
+                    {
+                        name: "size",
+                        value: undefined
+                    }
+                ]);
+            }
+
+            console.log("125", filterValues);
+        }
+
+        console.log("126", filterValues);
+    },[filterValues])
+
+    const onFinishFailed: FormProps<FilterType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    const onFinish = (values: any) => {
-        console.log("Values: ", values)
-    }
+    const onFinish: FormProps<FilterType>['onFinish'] = (values) => {
 
-    useEffect(() => {
-        console.log(location.pathname, location.search, location);
+        console.log("127", filterValues);
+        console.log("1271", values);
 
-        if (location.search === "")
+        let newAdress = "";
+
+        if (values.name)
         {
-            //размер = 5, с первой страницы
+            newAdress += "&name=" + values.name
         }
-        else
+
+        if (values.conclusions)
         {
-            const url = location.search.split("?")[1];
-            const filterAndSortingParameters = url.split("&");
-            console.log(filterAndSortingParameters);
-
-            const objectWithFilterAndSorting = new Map<string, string | string[]>();
-
-            for (let i = 0; i < filterAndSortingParameters.length; i++)
+            for (let i = 0; i < values.conclusions.length; i++)
             {
-                const pairOfValues = filterAndSortingParameters[i].split("=");
-                const name = pairOfValues[0];
-                const value = pairOfValues[1];
-
-                if (name != "conclusions")
-                {
-                    objectWithFilterAndSorting.set(name, value);
-                }
-                else
-                {
-                    const currentValue = objectWithFilterAndSorting.get(name) || [];
-                    const newValue = (Array.isArray(currentValue) && Array.isArray(value)) ? [...currentValue, ...value] 
-                    : Array.isArray(currentValue) ? [...currentValue, value]
-                    : Array.isArray(value) ? [currentValue, ...value]
-                    : [currentValue, value];
-
-                    objectWithFilterAndSorting.set(name, newValue);
-                }
+                newAdress += "&conclusions=" + values.conclusions[i];
             }
-
-            console.log(objectWithFilterAndSorting)
         }
-    },[location])
+
+        if (values.scheduledVisits)
+        {
+            newAdress += "&scheduledVisits=" + values.scheduledVisits;
+        }
+
+        if (values.onlyMine)
+        {
+            newAdress += "&onlyMine=" + values.onlyMine;
+        }
+
+        if (values.sorting)
+        {
+            newAdress += "&sorting=" + values.sorting;
+        }
+
+        if (values.size)
+        {
+            newAdress += "&size=" + values.size;
+        }
+
+        if (newAdress != "")
+        {
+            newAdress = "?" + newAdress.substring(1);
+        }
+
+        console.log(`/patients/${newAdress}`)
+
+        console.log("128", filterValues);
+        console.log("1281", values);
+
+        form.resetFields();
+
+        console.log("129", filterValues);
+        console.log("1291", values);
+
+        navigate(`/patients/${newAdress}`);
+
+        console.log("130", filterValues);
+        console.log("1301", values);
+
+        form.resetFields();
+    }
     
     return (<Card style={filterCardStyle}>
         <Title style={profileCardTitle}>Фильтры и сортировка</Title>
@@ -147,7 +308,6 @@ function FilterCard()
                         name="sorting"
                     >
                         <Select
-                            defaultValue="NameAsc"
                             options={[
                                 { value: 'NameAsc', label: 'По имени (А-Я)' },
                                 { value: 'NameDesc', label: 'По имени (Я-А)' },
@@ -176,7 +336,7 @@ function FilterCard()
                             showSearch
                             style={{...cardSizeStyle}}
                             options={
-                                generateValues(1, 50)
+                                generateValues(1, 100)
                             }
                         >
                         </Select>
