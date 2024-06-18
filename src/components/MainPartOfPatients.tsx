@@ -219,6 +219,8 @@ function MainPartOfPatients()
             console.log("201", response.data.pagination)
         }).catch(error => {
             console.log(error)
+
+            
         })
     },[location])
 
@@ -232,7 +234,7 @@ function MainPartOfPatients()
         <FilterCard filterValues={filterValues}/>
     </Flex>
     <Flex>
-        <PatientCardWrapper patients={patients}/>
+        <PatientCardWrapper patients={patients} pageInfo={pageInfo}/>
     </Flex>
     <Flex style={flexCentered}>
         <PageList pageInfo={pageInfo}/>

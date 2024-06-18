@@ -123,6 +123,10 @@ export const cardSizeStyle: React.CSSProperties = {
     borderRadius: 5
 }
 
+export const notRounded: React.CSSProperties = {
+    borderRadius: 1
+}
+
 export const cardSize: React.CSSProperties = {
     borderRadius: 5
 }
@@ -323,4 +327,55 @@ export const flexGapStyle: React.CSSProperties = {
 
 export const width100: React.CSSProperties = {
     flexGrow: 1
+}
+
+export const patientFlexCentered: React.CSSProperties = {
+    justifyContent: "center"
+}
+
+export const cursorPointerStyle: React.CSSProperties = {
+    cursor: "pointer"
+}
+
+export const paragraphStyle: React.CSSProperties = {
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    fontSize: 24
+}
+
+export const genderStyle: React.CSSProperties = {
+    marginLeft: 10,
+    color: cardButtonColor
+}
+
+export const changeMarginTop: React.CSSProperties = {
+    marginTop: 25
+}
+
+export const changeMarginBottom: React.CSSProperties = {
+    marginBottom: 10
+}
+
+export const rowJustifyBetween: React.CSSProperties = {
+    justifyContent: "space-between"
+}
+
+export const bottomStyle: React.CSSProperties = {
+    alignItems: "end"
+}
+
+export const deleteBottom: React.CSSProperties = {
+    marginBottom: 0
+}
+
+export const smallBottom: React.CSSProperties = {
+    marginBottom: 10
+}
+
+export const blackColorStyle: React.CSSProperties = {
+    color: "black"
+}
+
+export const deleteMarginBottom: React.CSSProperties = {
+    marginBottom: 0
 }

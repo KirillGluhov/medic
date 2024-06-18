@@ -37,7 +37,13 @@ const PageList: React.FC<PageListProps> = ({pageInfo}) =>
     },[pageInfo])
 
     const changePage = (pageNumber: number) => {
-        const url = location.search.split("?")[1];
+        let url = ""
+        
+        if (location.search)
+        {
+            url += location.search.split("?")[1];
+        }
+        
         const filterAndSortingParameters = url.split("&");
 
         let newUrl = "";
@@ -72,9 +78,13 @@ const PageList: React.FC<PageListProps> = ({pageInfo}) =>
     const renderPaginationButtons = () => {
         const buttons = [];
         
-        if (all == 0)
+        if (all == 0 && !pageInfo)
         {
-            buttons.push(renderPageButton(1, true));
+            buttons.push(renderPageButton(1, false));
+        }
+        else if (all == 0)
+        {
+            buttons.push(null);
         }
         else if (all <= 5) {
             for (let i = 1; i <= all; i++) {

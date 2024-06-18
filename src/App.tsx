@@ -7,6 +7,7 @@ import { useName } from './context/NameContext';
 import Registration from './pages/Registration';
 import Profile from './pages/Profile';
 import Patients from './pages/Patients';
+import OnePatient from './pages/OnePatient';
 
 function App()
 {
@@ -35,6 +36,7 @@ function App()
             
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/patients' element={<Patients/>}/>
+            <Route path='/patients/:id' element={<OnePatient/>}/>
         </Routes>
     )
 }

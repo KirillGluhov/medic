@@ -1,4 +1,4 @@
-import { Card, Form, Layout, Flex, Typography, Button, Input, Tooltip, Row, Col, Select, DatePicker } from "antd";
+import { Card, Form, Layout, Flex, Typography, Button, Input, Tooltip, Row, Col, Select, DatePicker, message } from "antd";
 import { 
     profileCardStyle, 
     cardTitle, 
@@ -18,6 +18,7 @@ import axios from "axios";
 import { baseUrl } from "../const/constValues";
 import { useLogin } from "../context/LoginContext";
 import { useName } from "../context/NameContext";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type FieldType = {
     email?: string;
@@ -35,6 +36,9 @@ function ProfileCard()
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
     const [currentProfile, setCurrentProfile] = useState<FieldType>();
+    
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         axios.get(
@@ -91,6 +95,10 @@ function ProfileCard()
             .catch(error => {
                 console.log(error);
             })
+
+            message.success("Изменения сохранены");
+            const reload = location.pathname + location.search
+            navigate(reload);
 
         })
         .catch(function (error) 

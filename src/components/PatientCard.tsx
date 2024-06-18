@@ -1,5 +1,6 @@
 import { Card, Typography } from "antd";
 import { 
+    cursorPointerStyle,
     filterCardStyle,
     smallTitleStyle,
     spanBlackColor,
@@ -7,6 +8,7 @@ import {
 } from "../styles/additionalStyles";
 import { Patient } from "./PatientCardWrapper";
 import { changeFormat } from "../functions/smallFunctions";
+import { useNavigate } from "react-router-dom";
 
 interface PatientsCardProps
 {
@@ -17,7 +19,13 @@ const {Paragraph, Title} = Typography;
 
 const PatientCard: React.FC<PatientsCardProps> = ({patient}) =>
 {
-    return (<Card style={filterCardStyle}>
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/patients/${patient.id}`)
+    }
+
+    return (<Card style={{...filterCardStyle, ...cursorPointerStyle}} onClick={handleClick}>
         <Title style={{...smallTitleStyle, ...spanBlackColor}}>{patient.name}</Title>
         <p><span style={spanCardStyle}>Пол - </span>{
             (patient.gender == "Male") ? 
