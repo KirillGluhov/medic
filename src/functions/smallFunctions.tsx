@@ -1,3 +1,7 @@
+import axios from "axios";
+import { icd10 } from "../components/CardCurrentPatient";
+import { baseUrl } from "../const/constValues";
+
 export function chooseErrorMessage(errorMessage: string)
 {
     switch (errorMessage) {
@@ -42,9 +46,41 @@ export function existTypeOfConclusion(value: string)
     }
 }
 
+export function chooseConclusion(value: string)
+{
+    switch (value) {
+        case "Disease":
+            return "болезнь";
+        case "Recovery":
+            return "восстановление";
+        case "Death":
+            return "смерть";
+        default:
+            return "";
+    }
+}
+
+export function existTypeOfICD(value: string, icds: icd10[])
+{
+    for (let i = 0; i < icds.length; i++)
+    {
+        if (value === icds[i].id)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 export function changeFormat(value: string)
 {
     const dateWithTire = value.split("T")[0];
     const dateSplitted = dateWithTire.split("-");
     return dateSplitted[2] + "." + dateSplitted[1] + "." + dateSplitted[0];
+}
+
+export function makeSmaller(value: string)
+{
+    return value.toLowerCase();
 }

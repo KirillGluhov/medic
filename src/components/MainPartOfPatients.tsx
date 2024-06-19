@@ -170,7 +170,7 @@ function MainPartOfPatients()
                 const pageNumber = isNatural(probablyPage) ? parseInt(probablyPage, 10) : undefined
                 if (pageNumber != undefined)
                 {
-                    queryString += "&" + "page=" + objectWithFilterAndSorting.get("page"); //может быть неправильным (выходить из диапазона)
+                    queryString += "&" + "page=" + objectWithFilterAndSorting.get("page");
                 }
                 else
                 {
@@ -237,7 +237,7 @@ function MainPartOfPatients()
         <PatientCardWrapper patients={patients} pageInfo={pageInfo}/>
     </Flex>
     <Flex style={flexCentered}>
-        <PageList pageInfo={pageInfo}/>
+        <PageList pageInfo={pageInfo} urlo="/patients/"/>
     </Flex>
     </Flex>;
 }

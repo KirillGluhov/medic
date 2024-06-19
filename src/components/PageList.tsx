@@ -1,5 +1,5 @@
 import { Button, Flex, Row } from "antd";
-import { flexGapStyle } from "../styles/additionalStyles";
+import { centeredStyle, flexGapStyle } from "../styles/additionalStyles";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Typography from "antd/es/typography/Typography";
 import { useEffect, useState } from "react";
@@ -15,10 +15,11 @@ export interface Page
 
 interface PageListProps
 {
-    pageInfo: Page | null
+    pageInfo: Page | null,
+    urlo: string
 }
 
-const PageList: React.FC<PageListProps> = ({pageInfo}) =>
+const PageList: React.FC<PageListProps> = ({pageInfo, urlo}) =>
 {
     const [current, setCurrent] = useState(1);
     const [all, setAll] = useState(0);
@@ -33,6 +34,7 @@ const PageList: React.FC<PageListProps> = ({pageInfo}) =>
             setCurrent(pageInfo.current);
             setAll(pageInfo.count);
         }
+        console.log("PageList: ", pageInfo);
 
     },[pageInfo])
 
@@ -63,7 +65,7 @@ const PageList: React.FC<PageListProps> = ({pageInfo}) =>
         newUrl += "&" + "page" + "=" + pageNumber;
         newUrl = "?" + newUrl.substring(1);
 
-        navigate(`/patients/${newUrl}`)
+        navigate(`${urlo}${newUrl}`)
     }
 
     const renderPageButton = (pageNumber: number, isCurrent: boolean = false) => (
@@ -117,7 +119,7 @@ const PageList: React.FC<PageListProps> = ({pageInfo}) =>
         return buttons;
     };
 
-    return (<Flex style={flexGapStyle}>
+    return (<Flex style={{...flexGapStyle}}>
         <Button 
             className="pagination" 
             disabled={current === 1} 

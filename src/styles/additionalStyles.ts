@@ -8,6 +8,9 @@ export const cardButtonColor = '#317cb9';
 export const registrationColorButton = '#d3d3eb';
 export const grayColor = '#aaabb5';
 export const blackColor = '#444b57';
+export const inspectionColor = "#6099c9";
+export const grayCardColor = '#8282a1';
+export const deathColor = '#ffefe8'
 
 export const headerStyle: React.CSSProperties = {
     backgroundColor: mainColor,
@@ -212,6 +215,12 @@ export const filterCardStyle: React.CSSProperties = {
     borderRadius: 10,
 }
 
+export const deathCardStyle: React.CSSProperties = {
+    backgroundColor: deathColor,
+    width: "100%",
+    borderRadius: 10,
+}
+
 export const contentWrapper: React.CSSProperties = {
     width: '80%',
     flexDirection: "column"
@@ -321,6 +330,11 @@ export const flexCentered: React.CSSProperties = {
     marginBottom: 24
 }
 
+export const flexCenteredStyle: React.CSSProperties = {
+    justifyContent: "center",
+    marginBottom: 24,
+}
+
 export const flexGapStyle: React.CSSProperties = {
     gap: 10
 }
@@ -378,4 +392,65 @@ export const blackColorStyle: React.CSSProperties = {
 
 export const deleteMarginBottom: React.CSSProperties = {
     marginBottom: 0
+}
+
+export const displayFlex: React.CSSProperties = {
+    display: "flex"
+}
+
+export const smallWidth: React.CSSProperties = {
+    width: 120,
+    height: 40,
+    display: "block"
+}
+
+export const textStyle: React.CSSProperties = {
+    fontFamily: "Arial"
+}
+
+export const textInspectionColor: React.CSSProperties = {
+    color: inspectionColor,
+    fontWeight: "bold",
+}
+
+export const bigAndMargin: React.CSSProperties = {
+    fontSize: 20,
+    marginRight: 5
+}
+
+export const bigAndBold: React.CSSProperties = {
+    fontSize: 15,
+    fontWeight: "bold"
+}
+
+export const heightSmall: React.CSSProperties = {
+    height: 28,
+    display: "flex",
+    alignItems: "center",
+    fontWeight: "bold"
+}
+
+export const grayColorStyle: React.CSSProperties = {
+    color: grayCardColor
+}
+
+export const smallPadding: React.CSSProperties = {
+    padding: 1
+}
+
+export const iconNormalSize: React.CSSProperties = {
+    fontSize: 24
+}
+
+export const centeredStyle: React.CSSProperties = {
+    display: "flex",
+    justifyContent: "center"
+}
+
+export const spaceBottom: React.CSSProperties = {
+    marginBottom: 16
+}
+
+export const colColStyle: React.CSSProperties = {
+    flexDirection: "column"
 }

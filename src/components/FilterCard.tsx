@@ -42,7 +42,6 @@ type FilterType = {
     onlyMine?: boolean | null,
     sorting?: string | null,
     size?: string | null
-
 };
 
 const FilterCard: React.FC<FilterCardProps> = ({filterValues}) =>

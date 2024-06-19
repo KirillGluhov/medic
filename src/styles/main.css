@@ -120,6 +120,11 @@ label
     color: var(--grayColor) !important;
 }
 
+label > span
+{
+    color: black !important;
+}
+
 .pagination:hover
 {
     color: var(--secondColor) !important;
@@ -149,4 +154,33 @@ label
 .ant-modal-content
 {
     padding-bottom: 1px !important;
+}
+
+.ant-radio-inner:after {
+    background: var(--secondColor) !important;
+}
+
+.ant-radio-checked .ant-radio-inner
+{
+    border-color: var(--secondColor) !important;
+    background-color: white !important;
+}
+
+.leftAddedElement::before
+{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 20px;
+    height: 40px;
+    border-left: 2px solid #e0e0e0;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid #e0e0e0;
+    border-right: 2px solid transparent;
+}
+
+.openInspection:hover
+{
+    cursor: pointer;
 }
