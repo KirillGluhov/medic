@@ -11,6 +11,7 @@ export const blackColor = '#444b57';
 export const inspectionColor = "#6099c9";
 export const grayCardColor = '#8282a1';
 export const deathColor = '#ffefe8'
+export const darkerBlueColor = '#193f76';
 
 export const headerStyle: React.CSSProperties = {
     backgroundColor: mainColor,
@@ -453,4 +454,8 @@ export const spaceBottom: React.CSSProperties = {
 
 export const colColStyle: React.CSSProperties = {
     flexDirection: "column"
+}
+
+export const tagColorStyle: React.CSSProperties = {
+    color: cardButtonColor
 }

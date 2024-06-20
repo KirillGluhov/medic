@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, Radio, RadioChangeEvent, Row, Select, SelectProps, Switch, Tooltip } from "antd";
+import { Button, Card, Col, Form, Input, Radio, RadioChangeEvent, Row, Select, SelectProps, Space, Switch, Tag, Tooltip } from "antd";
 import { 
     blackColorStyle, 
     boldText, 
@@ -15,7 +15,10 @@ import {
     deleteMarginBottom,
     headerColStyle,
     displayFlex,
-    smallWidth
+    smallWidth,
+    tagColorStyle,
+    cardButtonColor,
+    darkerBlueColor
 } from "../styles/additionalStyles";
 import { existTypeOfICD, generateValues } from "../functions/smallFunctions";
 import React, { useEffect, useState } from "react";
@@ -25,6 +28,8 @@ import { error } from "console";
 import { icd10 } from "./CardCurrentPatient";
 import { FormProps } from "antd/lib";
 import { useLocation, useNavigate } from "react-router-dom";
+
+type TagRender = SelectProps['tagRender'];
 
 type FilterType = {
     icdRoots?: string[] | null,
@@ -40,6 +45,25 @@ interface FilterBlockProps
         size?: number
     };
 }
+
+const tagRender: TagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+    return (
+        <Tag
+            color={darkerBlueColor}
+            onMouseDown={onPreventMouseDown}
+            closable={closable}
+            onClose={onClose}
+            style={{ marginInlineEnd: 5, color: "white" }}
+        >
+        {label}
+        </Tag>
+    );
+};
 
 const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
 {
@@ -195,8 +219,15 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
                             allowClear
                             options={rootICD.map(ICD => ({
                                 value: ICD.id,
-                                label: ICD.code + " " + ICD.name
+                                desc: ICD.code + " " + ICD.name,
+                                label: ICD.code
                             }))}
+                            optionRender={(option) => (
+                                <Space>
+                                  {option.data.desc}
+                                </Space>
+                            )}
+                            tagRender={tagRender}
                             placeholder="Выбрать"
                             maxTagCount='responsive'
 

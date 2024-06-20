@@ -1,9 +1,9 @@
-import { Flex } from "antd";
-import PatientMainInfo from "./PatientMainInfo";
+import { Empty, Flex, Typography } from "antd";
+import PatientMainInfo, { PatientInfo } from "./PatientMainInfo";
 import FilterBlock from "./FilterBlock";
 import InspectionWrapper from "./InspectionWrapper";
 import PageList, { Page } from "./PageList";
-import { centeredStyle, contentWrapper, flexCentered, flexCenteredStyle } from "../styles/additionalStyles";
+import { cardTitle, centeredStyle, contentWrapper, flexCentered, flexCenteredStyle } from "../styles/additionalStyles";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -25,6 +25,7 @@ function CardCurrentPatient()
     const [filterValues, setFilterValues] = useState({});
     const [pageInfo, setPageInfo] = useState<Page | null>(null);
     const [inspections, setInspections] = useState([]);
+    const [patientInfo, setPatientInfo] = useState<PatientInfo| null>(null);
 
     useEffect(() => {
 
@@ -173,13 +174,37 @@ function CardCurrentPatient()
 
     },[location])
     
-    return (<Flex style={{...contentWrapper}}>
-        <PatientMainInfo/>
-        <FilterBlock filterValues={filterValues}/>
-        <InspectionWrapper inspections={inspections}/>
-        <Flex style={flexCenteredStyle}>
-            <PageList pageInfo={pageInfo} urlo={`/patients/${location.pathname.split("/")[2]}/`}/>
-        </Flex>
+    return (
+    <Flex style={{...contentWrapper}}>
+        <PatientMainInfo setPatientInfo={setPatientInfo}/>
+        {(patientInfo && inspections && pageInfo && pageInfo.current <= pageInfo.count) ? 
+        <>
+            <FilterBlock filterValues={filterValues}/>
+            <InspectionWrapper inspections={inspections}/>
+            <Flex style={flexCenteredStyle}>
+                <PageList pageInfo={pageInfo} urlo={`/patients/${location.pathname.split("/")[2]}/`}/>
+            </Flex>
+        </> : 
+        (patientInfo && pageInfo) ? 
+        <>
+            <FilterBlock filterValues={filterValues}/>
+            <Empty description={
+                <Typography style={cardTitle}>Нет осмотров</Typography>
+            }/>
+            <Flex style={flexCenteredStyle}>
+                <PageList pageInfo={pageInfo} urlo={`/patients/${location.pathname.split("/")[2]}/`}/>
+            </Flex>
+        </> : 
+        (patientInfo) ? 
+        <>
+            <FilterBlock filterValues={filterValues}/>
+            <Empty description={
+                <Typography style={cardTitle}>Нет такой страницы</Typography>
+            }/>
+            <Flex style={flexCenteredStyle}>
+                <PageList pageInfo={pageInfo} urlo={`/patients/${location.pathname.split("/")[2]}/`}/>
+            </Flex>
+        </> : null}
     </Flex>);
 }
 

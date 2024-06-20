@@ -51,7 +51,7 @@ const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
                 {
                     Array.from(inspections).map((inspection, index) => (
                         (index % 2 == 0) ? 
-                        <InspectionInnerWrapper inspection={inspection}/>
+                        <InspectionInnerWrapper inspection={inspection} key={inspection.id}/>
                         : null
                     ))
                 }
@@ -60,7 +60,7 @@ const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
                 {
                     Array.from(inspections).map((inspection, index) => (
                         (index % 2 == 1) ? 
-                        <InspectionInnerWrapper inspection={inspection}/>
+                        <InspectionInnerWrapper inspection={inspection} key={inspection.id}/>
                         : null
                     ))
                 }
@@ -70,33 +70,3 @@ const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
 }
 
 export default InspectionWrapper;
-
-/*
-Последовательность: 
-
-<Row gutter={[16, 0]} style={{...rowTopStyle, ...width100, ...patientFlexCentered}}>
-            <Col xs={24} xl={12}>
-                <Row style={spaceBottom}>
-                    <Col style={{...width100, ...headerWrapperForTitle, ...headerColStyle, ...colColStyle}}>
-                        <InspectionCard number={0}/>
-                        <InspectionCard number={1}/>
-                        <InspectionCard number={2}/>
-                        <InspectionCard number={3}/>
-                    </Col>
-                </Row>
-                <Row style={spaceBottom}>
-                    <InspectionCard number={0}/>
-                </Row>
-            </Col>
-            <Col xs={24} xl={12}>
-                <Row style={spaceBottom}>
-                    <InspectionCard number={0}/>
-                </Row>
-                <Row style={spaceBottom}>
-                    <InspectionCard number={0}/>
-                </Row>
-            </Col>
-        </Row>
-
-
-*/

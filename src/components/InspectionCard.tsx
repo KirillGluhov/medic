@@ -23,17 +23,20 @@ import {ReactComponent as LeftElement} from "../svg/LeftElement.svg";
 import { InspectionPreview } from "./InspectionWrapper";
 import { changeFormat, chooseConclusion, makeSmaller } from "../functions/smallFunctions";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
 
 interface InspectionCardProps
 {
     number: number
-    inspection: InspectionPreview
+    inspection: InspectionPreview,
+    onClick?: MouseEventHandler<HTMLSpanElement>,
+    hidden?: boolean,
+    currentNumber: number | null
 }
 
-const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection}) =>
+const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onClick, hidden, currentNumber}) =>
 {
     const location = useLocation();
     const [grouped, setGrouped] = useState(false);
@@ -82,13 +85,17 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection}) =>
 
     },[location])
 
-    return (<Card className={(number > 0 && number < 3) ? "leftAddedElement" : ""} style={{
-        ...(inspection.conclusion === "Death" ? deathCardStyle : filterCardStyle), 
-        marginTop: number > 0 ? 16 : 0, 
-        width: number == 0 ? '100%' : number == 1 ? `calc(100% - 25px)` : number > 1 ? `calc(100% - 50px)` : '100%',
-        marginLeft: number >= 2 ? 50 : number >= 1 ? 25 : 0,
-        position: "relative"
-        }}>
+    return (<Card 
+            className={(number > 0 && number < 3) ? "leftAddedElement" : ""} 
+            style={{
+                ...(inspection.conclusion === "Death" ? deathCardStyle : filterCardStyle), 
+                marginTop: number > 0 ? 16 : 0, 
+                width: number == 0 ? '100%' : number == 1 ? `calc(100% - 25px)` : number > 1 ? `calc(100% - 50px)` : '100%',
+                marginLeft: number >= 2 ? 50 : number >= 1 ? 25 : 0,
+                position: "relative",
+                display: hidden ? "none" : "block"
+            }}
+        >
         <Row style={rowJustifyBetween}>
             <Col>
                 <Row>
@@ -96,9 +103,14 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection}) =>
                         {(grouped && inspection.hasNested) ? <Tag 
                             color={cardButtonColor} 
                             style={{...textStyle, ...heightSmall, ...smallPadding, ...iconNormalSize}}
-                            onClick={handleClick}
+                            onClick={onClick}
                         >
-                            <PlusOutlined className="openInspection"/>
+                            {
+                                (currentNumber !== null && currentNumber <= number) ? 
+                                <PlusOutlined className="openInspection"/> :
+                                <MinusOutlined className="openInspection"/>
+                                
+                            }
                         </Tag> : null}
                     </Col>
                     <Col>
@@ -117,7 +129,7 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection}) =>
             <Col>
                 <Row gutter={10}>
                     <Col>
-                        {(inspection.conclusion === "Death" || ((grouped && inspection.hasNested))) ? null : <Typography.Paragraph 
+                        {(inspection.conclusion === "Death" || inspection.hasNested) ? null : <Typography.Paragraph 
                             style={
                                 {
                                     ...textStyle, 

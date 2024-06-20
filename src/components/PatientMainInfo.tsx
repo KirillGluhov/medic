@@ -16,7 +16,7 @@ import {
     smallBottom
 } from "../styles/additionalStyles";
 import { WomanOutlined, ManOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
 import { useLocation } from "react-router-dom";
@@ -25,7 +25,7 @@ import { changeFormat } from "../functions/smallFunctions";
 
 const {Paragraph, Title} = Typography;
 
-interface patientInfo
+export interface PatientInfo
 {
     id: string,
     name: string,
@@ -34,11 +34,14 @@ interface patientInfo
     gender: string
 }
 
-function PatientMainInfo()
+type PatientMainInfoProps = {
+    setPatientInfo: (info: PatientInfo | null) => void;
+};
+
+const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
 {
     const location = useLocation();
-
-    const [patientInfo, setPatientInfo] = useState<patientInfo | null>(null);
+    const [localPatientInfo, setLocalPatientInfo] = useState<PatientInfo | null>(null);
 
     useEffect(() => {
 
@@ -59,6 +62,7 @@ function PatientMainInfo()
         .then(response => {
             console.log(response);
             setPatientInfo(response.data)
+            setLocalPatientInfo(response.data);
         })
         .catch(error => {
             console.log(error);
@@ -66,7 +70,7 @@ function PatientMainInfo()
     },[])
 
     return (<Col style={changeMarginTop}>
-        {patientInfo ? 
+        {localPatientInfo ? 
         <>
             <Row style={{...rowJustifyBetween, ...changeMarginBottom}}>
                 <Col>
@@ -88,11 +92,11 @@ function PatientMainInfo()
             <Row style={{...rowJustifyBetween, ...smallBottom}}>
                 <Col>
                     <Paragraph style={{...paragraphStyle, ...deleteBottom}}>
-                        {patientInfo.name}
+                        {localPatientInfo.name}
                         {
-                            (patientInfo.gender === "Female") ? 
+                            (localPatientInfo.gender === "Female") ? 
                             <WomanOutlined style={genderStyle}/> 
-                            : (patientInfo.gender === "Male") ? 
+                            : (localPatientInfo.gender === "Male") ? 
                             <ManOutlined style={genderStyle}/> 
                             : null
                         }
@@ -102,8 +106,8 @@ function PatientMainInfo()
                     <Paragraph style={deleteBottom}>
                         <span>Дата рождения: </span>
                         {
-                            patientInfo.birthday ? 
-                            changeFormat(patientInfo.birthday) : 
+                            localPatientInfo.birthday ? 
+                            changeFormat(localPatientInfo.birthday) : 
                             "Не указано"
                         }
                     </Paragraph>

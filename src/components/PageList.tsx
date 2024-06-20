@@ -45,8 +45,9 @@ const PageList: React.FC<PageListProps> = ({pageInfo, urlo}) =>
         {
             url += location.search.split("?")[1];
         }
+        console.log("URL:", url);
         
-        const filterAndSortingParameters = url.split("&");
+        const filterAndSortingParameters = url ? url.split("&") : [];
 
         let newUrl = "";
 
