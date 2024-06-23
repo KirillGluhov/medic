@@ -8,6 +8,7 @@ import Registration from './pages/Registration';
 import Profile from './pages/Profile';
 import Patients from './pages/Patients';
 import OnePatient from './pages/OnePatient';
+import CreationOfInspections from './pages/CreationOfInspection';
 
 function App()
 {
@@ -37,6 +38,7 @@ function App()
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/patients' element={<Patients/>}/>
             <Route path='/patients/:id' element={<OnePatient/>}/>
+            <Route path='/inspection/create' element={<CreationOfInspections/>}/>
         </Routes>
     )
 }

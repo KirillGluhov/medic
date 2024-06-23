@@ -125,7 +125,7 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
             else
             {
                 form.setFieldsValue({
-                    grouped: undefined,
+                    grouped: 'false',
                 });
             }
 
@@ -143,7 +143,7 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
                 form.setFields([
                     {
                         name: "size",
-                        value: undefined
+                        value: '5'
                     }
                 ]);
             }

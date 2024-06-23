@@ -184,3 +184,18 @@ label > span
 {
     cursor: pointer;
 }
+
+.addInspectionOnCard:hover
+{
+    cursor: pointer;
+}
+
+label::after
+{
+    display: none;
+}
+
+.inspectionLabel
+{
+    color: var(--secondColor) !important;
+}

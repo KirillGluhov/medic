@@ -151,7 +151,7 @@ function CardCurrentPatient()
 
             console.log("query: ", queryString);
 
-            console.log(objectWithFilterAndSorting) // не существует пациента, выход за пределы страницы (не тот номер), пустой результат поиска
+            console.log(objectWithFilterAndSorting) 
         }
 
         axios.get(baseUrl + `patient/${id}/inspections` + queryString, 

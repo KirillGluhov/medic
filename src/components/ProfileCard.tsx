@@ -185,9 +185,9 @@ function ProfileCard()
                                     format: 'DD.MM.YYYY',
                                     type: 'mask',
                                 }} 
-                                placeholder="дд.мм.ггг" 
+                                placeholder="дд.мм.гггг" 
                                 suffixIcon={<CalendarOutlined style={datePickerStyle} />}
-                                minDate={dayjs('1900-08-01', 'YYYY-MM-DD')}
+                                minDate={dayjs('1900-01-01', 'YYYY-MM-DD')}
                                 maxDate={dayjs()}
                                 style={{...cardSizeStyle, ...datePickerStyle}}
                             />

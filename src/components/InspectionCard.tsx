@@ -22,24 +22,36 @@ import { FormOutlined, PlusOutlined, SearchOutlined, MinusOutlined } from "@ant-
 import {ReactComponent as LeftElement} from "../svg/LeftElement.svg";
 import { InspectionPreview } from "./InspectionWrapper";
 import { changeFormat, chooseConclusion, makeSmaller } from "../functions/smallFunctions";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
+import { usePatientAndInspection } from "../context/PatientAndInspectionContext";
 
 interface InspectionCardProps
 {
     number: number
     inspection: InspectionPreview,
-    onClick?: MouseEventHandler<HTMLSpanElement>,
+    onClickOpen?: MouseEventHandler<HTMLSpanElement>,
     hidden?: boolean,
     currentNumber: number | null
 }
 
-const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onClick, hidden, currentNumber}) =>
+const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onClickOpen, hidden, currentNumber}) =>
 {
     const location = useLocation();
+    const navigate = useNavigate();
+
     const [grouped, setGrouped] = useState(false);
+
+    const {Inspection, setInspection} = usePatientAndInspection();
+
+    const handleCreateInspection = () =>
+    {
+        const idOfInspection = inspection.id;
+        setInspection(idOfInspection);
+        navigate("/inspection/create");
+    }
 
     const handleClick = () => {
         axios.get(baseUrl + `inspection/${inspection.id}/chain`, 
@@ -103,7 +115,7 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onCl
                         {(grouped && inspection.hasNested) ? <Tag 
                             color={cardButtonColor} 
                             style={{...textStyle, ...heightSmall, ...smallPadding, ...iconNormalSize}}
-                            onClick={onClick}
+                            onClick={onClickOpen}
                         >
                             {
                                 (currentNumber !== null && currentNumber <= number) ? 
@@ -137,6 +149,8 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onCl
                                     ...improveColumn
                                 }
                             }
+                            className="addInspectionOnCard"
+                            onClick={handleCreateInspection}
                         >
                             <FormOutlined style={bigAndMargin}/>Добавить осмотр
                         </Typography.Paragraph>}

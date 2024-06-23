@@ -12,6 +12,7 @@ export const inspectionColor = "#6099c9";
 export const grayCardColor = '#8282a1';
 export const deathColor = '#ffefe8'
 export const darkerBlueColor = '#193f76';
+export const titleColor = '#446694';
 
 export const headerStyle: React.CSSProperties = {
     backgroundColor: mainColor,
@@ -214,6 +215,12 @@ export const filterCardStyle: React.CSSProperties = {
     backgroundColor: cardColor,
     width: "100%",
     borderRadius: 10,
+}
+
+export const inspectionCardStyle: React.CSSProperties = {
+    backgroundColor: cardColor,
+    width: "100%",
+    borderRadius: 2,
 }
 
 export const deathCardStyle: React.CSSProperties = {
@@ -458,4 +465,31 @@ export const colColStyle: React.CSSProperties = {
 
 export const tagColorStyle: React.CSSProperties = {
     color: cardButtonColor
+}
+
+export const titleInspectionStyle: React.CSSProperties = {
+    marginTop: 16,
+    marginBottom: 16
+}
+
+export const confirmButtonStyle: React.CSSProperties = {
+    marginTop: 16
+}
+
+export const titleInOneBlockStyle: React.CSSProperties = {
+    fontFamily: "Arial",
+    fontSize: 24,
+    color: titleColor
+}
+
+export const withoutPaddingTop: React.CSSProperties = {
+    marginTop: 0
+}
+
+export const textAreaStyle: React.CSSProperties = {
+    borderRadius: 2
+}
+
+export const styleOfInspectionLabel: React.CSSProperties = {
+    marginRight: 5
 }

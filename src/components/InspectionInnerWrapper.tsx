@@ -85,7 +85,7 @@ const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection}) =>
         <InspectionCard 
             number={0} 
             inspection={inspection}
-            onClick={() => handleClick(0)}
+            onClickOpen={() => handleClick(0)}
             currentNumber={selectNumber}
         />
         {
@@ -95,7 +95,7 @@ const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection}) =>
                     key={addInsp.id}
                     number={index+1} 
                     inspection={addInsp}
-                    onClick={() => handleClick(index+1)}
+                    onClickOpen={() => handleClick(index+1)}
                     hidden={selectNumber !== null && index + 1 > selectNumber}
                     currentNumber={selectNumber}
                 />

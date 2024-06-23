@@ -84,3 +84,23 @@ export function makeSmaller(value: string)
 {
     return value.toLowerCase();
 }
+
+export function changeFormatToDateAndTime(value: string)
+{
+    const allDate = value.split("T");
+
+    const datePart = allDate[0];
+    const timePart = allDate[1];
+
+    const dateSplit = datePart.split("-");
+    const timeSplit = timePart.split(":");
+
+    return dateSplit[2] + "." + dateSplit[1] + "." + dateSplit[0] + " " + timeSplit[0] + ":" + timeSplit[1];
+}
+
+export function deleteLastSemicolon(value: string)
+{
+    const lastIndex = value.lastIndexOf(':');
+
+    return lastIndex != -1 ? value.substring(0, lastIndex) : value;
+}

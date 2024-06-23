@@ -137,7 +137,7 @@ const FilterCard: React.FC<FilterCardProps> = ({filterValues}) =>
                 form.setFields([
                     {
                         name: "sorting",
-                        value: undefined
+                        value: 'NameAsc'
                     }
                 ]);
             }
@@ -156,7 +156,7 @@ const FilterCard: React.FC<FilterCardProps> = ({filterValues}) =>
                 form.setFields([
                     {
                         name: "size",
-                        value: undefined
+                        value: '5'
                     }
                 ]);
             }

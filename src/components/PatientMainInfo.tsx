@@ -19,9 +19,10 @@ import { WomanOutlined, ManOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { error } from "console";
 import { changeFormat } from "../functions/smallFunctions";
+import { usePatientAndInspection } from "../context/PatientAndInspectionContext";
 
 const {Paragraph, Title} = Typography;
 
@@ -41,7 +42,16 @@ type PatientMainInfoProps = {
 const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
 {
     const location = useLocation();
+    const navigate = useNavigate();
+
     const [localPatientInfo, setLocalPatientInfo] = useState<PatientInfo | null>(null);
+    const {Patient, setPatient, Inspection, setInspection} = usePatientAndInspection();
+
+    const handleCreateInspection = () =>
+    {
+        setInspection('');
+        navigate('/inspection/create');
+    }
 
     useEffect(() => {
 
@@ -63,6 +73,7 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
             console.log(response);
             setPatientInfo(response.data)
             setLocalPatientInfo(response.data);
+            setPatient(response.data.id);
         })
         .catch(error => {
             console.log(error);
@@ -86,6 +97,8 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
                                 ...boldText
                             }
                         }
+                        onClick={handleCreateInspection}
+                        className="addInspectionOnCard"
                     >Добавить осмотр</Button>
                 </Col>
             </Row>
