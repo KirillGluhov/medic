@@ -21,6 +21,16 @@ label.ant-form-item-required-mark-optional
     padding-bottom: 0 !important;
 }
 
+.inspection > .ant-card-body
+{
+    padding-bottom: 24px !important;
+}
+
+/*.ant-card-body.inspection
+{
+    padding-bottom: 24 !important;
+}*/
+
 .ant-select-suffix
 {
     color: black;
@@ -198,4 +208,9 @@ label::after
 .inspectionLabel
 {
     color: var(--secondColor) !important;
+}
+
+.ant-select-auto-complete
+{
+    width: 100%;
 }

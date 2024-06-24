@@ -31,7 +31,7 @@ function Complaints()
                 }
             ]}
         >
-            <TextArea rows={2} style={textAreaStyle}/>
+            <TextArea rows={2} style={{...textAreaStyle, resize: 'none'}}/>
         </Form.Item>
     </Card>)
 }

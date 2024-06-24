@@ -45,7 +45,7 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
     const navigate = useNavigate();
 
     const [localPatientInfo, setLocalPatientInfo] = useState<PatientInfo | null>(null);
-    const {Patient, setPatient, Inspection, setInspection} = usePatientAndInspection();
+    const {Inspection, setInspection} = usePatientAndInspection();
 
     const handleCreateInspection = () =>
     {
@@ -73,7 +73,7 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
             console.log(response);
             setPatientInfo(response.data)
             setLocalPatientInfo(response.data);
-            setPatient(response.data.id);
+            localStorage.setItem("patient", response.data.id);
         })
         .catch(error => {
             console.log(error);

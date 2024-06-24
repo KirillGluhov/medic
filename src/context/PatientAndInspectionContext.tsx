@@ -2,8 +2,6 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 
 
 interface PatientAndInspectionContextType {
-    Patient: string;
-    setPatient: React.Dispatch<React.SetStateAction<string>>;
     Inspection: string;
     setInspection: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -16,13 +14,11 @@ const PatientAndInspectionContext = createContext<PatientAndInspectionContextTyp
 
 export const PatientAndInspectionProvider = ({children}: PatientAndInspectionProviderProps) => {
     
-    const [Patient, setPatient] = useState('')
     const [Inspection, setInspection] = useState('')
 
     return (
         <PatientAndInspectionContext.Provider value={
             {
-                Patient, setPatient,
                 Inspection, setInspection
             }
         }>

@@ -14,7 +14,7 @@ function CreationOfInspections()
 {
     const {isLogin, setIsLogin} = useLogin();
     const navigate = useNavigate();
-    const {Patient, setPatient, Inspection, setInspection} = usePatientAndInspection();
+    const {Inspection, setInspection} = usePatientAndInspection();
     
     useEffect(() => {
         if (isLogin === null)

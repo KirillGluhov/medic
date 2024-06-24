@@ -9,6 +9,9 @@ import Complaints from "./Complaints";
 import Anamnesis from "./Anamnesis";
 import DateOfInspectionAndInfoAboutPreviuos from "./DateOfInspectionAndInfoAboutPreviuos";
 import Treatment from "./Treatment";
+import Consultations from "./Consultations";
+import Conclusion from "./Conclusion";
+import Diagnosis from "./Diagnosis";
 
 
 function CreationInspectionFormWrapper()
@@ -40,12 +43,18 @@ function CreationInspectionFormWrapper()
                 <Col span={24}>
                     <Anamnesis/>
                 </Col>
-                {/*<Consultations/>
-                <Diagnosis/>*/}
+                <Col span={24}>
+                    <Consultations form={form}/>
+                </Col>
+                <Col span={24}>
+                    <Diagnosis form={form}/>
+                </Col>
                 <Col span={24}>
                     <Treatment/>
                 </Col>
-                {/*<Conclusion/>*/}
+                <Col span={24}>
+                    <Conclusion form={form}/>
+                </Col>
             </Row>
             <SaveOrDelete/>
         </Form>

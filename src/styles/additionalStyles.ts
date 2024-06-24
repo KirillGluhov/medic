@@ -493,3 +493,31 @@ export const textAreaStyle: React.CSSProperties = {
 export const styleOfInspectionLabel: React.CSSProperties = {
     marginRight: 5
 }
+
+export const flexGrow: React.CSSProperties = {
+    flexGrow: 1
+}
+
+export const marginBottomMedium: React.CSSProperties = {
+    marginBottom: 24
+}
+
+export const commentaryStyle: React.CSSProperties = {
+    color: grayColor
+}
+
+export const textAreaMarginTop: React.CSSProperties = {
+    marginTop: 10
+}
+
+export const whiteText: React.CSSProperties = {
+    color: 'white'
+}
+
+export const autoWidth: React.CSSProperties = {
+    display: 'inline-flex'
+}
+
+export const withoutPadding: React.CSSProperties = {
+    paddingLeft: 0
+}

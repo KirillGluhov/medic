@@ -29,7 +29,6 @@ import { DiagnosisModel, InspectionPreview } from "./InspectionWrapper";
 
 const {Paragraph, Title} = Typography;
 
-
 interface PatientCardInfo
 {
     birthday?: string;
@@ -54,10 +53,9 @@ interface InspectionShort
 
 const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAboutPreviuosProps> = ({form}) =>
 {
-    const {Patient, setPatient, Inspection, setInspection} = usePatientAndInspection();
+    const {Inspection, setInspection} = usePatientAndInspection();
 
     const isRepeatInspectionValue = Form.useWatch('isRepeatInspection', form);
-    //const selectedPrevious = Form.useWatch('previousInspectionId', form)
 
     const [currentPatient, setCurrentPatient] = useState<PatientCardInfo | null>(null);
     const [previousInspection, setPreviousInspection] = useState<InspectionPreview | null>(null);
@@ -94,22 +92,43 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
         dayjs(deleteLastSemicolon(previousInspection.date), 'YYYY-MM-DD HH:mm') : 
         dayjs('1900-01-01T00:00', 'YYYY-MM-DD HH:mm');
 
-        if (!current || !current.isSame(minDateTime, 'day')) {
+        const now = dayjs();
+
+        if (!current)
+        {
           return {};
         }
     
         const minHours = minDateTime.hour();
         const minMinutes = minDateTime.minute();
+
+        const maxHours = now.hour();
+        const maxMinutes = now.minute();
     
-        return {
-          disabledHours: () => range(0, minHours),
-          disabledMinutes: () => range(0, minMinutes),
-        };
+
+        if (current.isSame(minDateTime, 'day'))
+        {
+            return {
+                disabledHours: () => range(0, minHours),
+                disabledMinutes: () => range(0, minMinutes),
+            };
+        }
+        else if (current.isSame(now, 'day'))
+        {
+            return {
+                disabledHours: () => range(maxHours+1, 24),
+                disabledMinutes: () => range(maxMinutes+1, 60),
+            };
+        }
+        else
+        {
+            return {};
+        }
     };
 
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${Patient}`,
+        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}`,
             { 
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -123,10 +142,10 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
         .catch(error => {
             console.log(error);
         })
-    },[Patient])
+    },[])
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${Patient}/inspections/search`,
+        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections/search`,
             { 
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -165,7 +184,7 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
         form.setFieldsValue({
             previousInspectionId: Inspection ? Inspection : undefined,
         });
-    },[Inspection, Patient])
+    },[Inspection])
 
     return (
          <Card style={{...inspectionCardStyle}}>
