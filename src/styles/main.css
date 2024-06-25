@@ -21,6 +21,10 @@ label.ant-form-item-required-mark-optional
     padding-bottom: 0 !important;
 }
 
+.ant-select-selector, .ant-input {
+    border-radius: 2px !important;
+}
+
 .inspection > .ant-card-body
 {
     padding-bottom: 24px !important;
@@ -213,4 +217,11 @@ label::after
 .ant-select-auto-complete
 {
     width: 100%;
+}
+
+.redSquare
+{
+    height: 10px;
+    width: 10px;
+    background-color: red;
 }

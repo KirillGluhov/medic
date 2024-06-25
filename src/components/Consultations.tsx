@@ -48,9 +48,9 @@ const Consultations: React.FC<ConsultationsProps> = ({form}) =>
 
         const specialities = consultations.map((consultation: { specialityId: any; }) => consultation.specialityId) || [];
     
-        const allSpecialities = [specId, ...specialities];
+        const allSpecialities = specId ? [specId, ...specialities] : specialities;
     
-        if (value && allSpecialities.filter(id => id === value).length > 1) {
+        if (value && allSpecialities.filter((id: any) => id === value).length > 1) {
           return Promise.reject('Специальности должны быть уникальны');
         }
         return Promise.resolve();

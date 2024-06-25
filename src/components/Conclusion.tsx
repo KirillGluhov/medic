@@ -80,16 +80,22 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
         }
     };
 
-    return (<Card className="inspection" style={{...inspectionCardStyle}}>
+    return (<Card style={{...inspectionCardStyle}}>
         <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}}>Заключение</Typography.Title>
         <Row gutter={[16,16]}>
             <Col span={8}>
+                <span style={commentaryStyle}>Заключение</span>
                 <Form.Item
                     name="conclusion"
-                    label="Заключение"
-                    layout="vertical"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Заключение не должно быть пустым',
+                        }
+                    ]}
                 >
                 <Select
+                
                 options={isHaveDeath ? [
                     { value: 'Disease', label: 'Болезнь' },
                     { value: 'Recovery', label: 'Выздоровление' },

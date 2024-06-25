@@ -2,6 +2,7 @@ import { Card, Col, DatePicker, Form, Row, Select, Switch, Typography } from "an
 import { 
     bottomStyle, 
     cardSizeStyle, 
+    commentaryStyle, 
     datePickerStyle, 
     deleteBottom, 
     filterSwitchStyle, 
@@ -57,6 +58,9 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
 
     const isRepeatInspectionValue = Form.useWatch('isRepeatInspection', form);
 
+    const [isHaveDeath, setIsHaveDeath] = useState(false);
+    const [deathId, setDeathId] = useState(null);
+
     const [currentPatient, setCurrentPatient] = useState<PatientCardInfo | null>(null);
     const [previousInspection, setPreviousInspection] = useState<InspectionPreview | null>(null);
 
@@ -69,6 +73,35 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
         }
         return result;
     };
+
+    useEffect(() => {
+        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections?grouped=true&page=1&size=1`, 
+        { 
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem("token")}` 
+            } 
+        })
+        .then(response => {
+            console.log(response);
+            if
+            (
+                response.data 
+                && response.data.inspections 
+                && response.data.inspections[0] 
+                && response.data.inspections[0].conclusion 
+                && response.data.inspections[0].conclusion === "Death"
+            ) 
+            {
+                setIsHaveDeath(true); 
+                setDeathId(response.data.inspections[0].id)
+
+            }
+            else {setIsHaveDeath(false)}
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    },[currentPatient])
 
     const handleChange = (value: string) => {
         axios.get(baseUrl + `inspection/${value}`,
@@ -231,15 +264,20 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
                 isRepeatInspectionValue ? 
                 <Row>
                     <Col span={8}>
+                        <span style={commentaryStyle}>Предыдущий осмотр</span>
                         <Form.Item
-                            label="Предыдущий осмотр"
-                            layout="vertical"
                             name="previousInspectionId"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Есть предыдущий осмотр - значит не пустой',
+                                }
+                            ]}
                         >
                             <Select 
                                 style={{...textAreaStyle}} 
                                 placeholder="Выберите осмотр"
-                                options={inspections.map(insp => ({
+                                options={inspections.filter(insp => insp.id !== deathId).map(insp => ({
                                     value: insp.id,
                                     desc: insp.date,
                                     label: changeFormatToDateAndTime(insp.date) + " " + insp.diagnosis.code + " - " + insp.diagnosis.name
@@ -251,14 +289,18 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
                 </Row> : 
                 null
             }
-            <br/>
             
             <Row>
                 <Col span={8}>
+                    <span style={commentaryStyle}>Дата осмотра</span>
                     <Form.Item
-                        layout="vertical"
-                        label="Дата осмотра"
                         name="date"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Вы не ввели дату осмотра',
+                            }
+                        ]}
                     >
                         <DatePicker 
                             placeholder="дд.мм.гггг чч:мм" 
@@ -282,7 +324,6 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
                     </Form.Item>
                 </Col>
             </Row>
-            <br/>
             </>}
         </Card>);
 }

@@ -104,3 +104,17 @@ export function deleteLastSemicolon(value: string)
 
     return lastIndex != -1 ? value.substring(0, lastIndex) : value;
 }
+
+export function findType(value: string)
+{
+    switch (value) {
+        case "Main":
+            return "основой"
+        case "Concomitant":
+            return "сопутствующий"
+        case "Complication":
+            return "осложнение"
+        default:
+            return value;
+    }
+}

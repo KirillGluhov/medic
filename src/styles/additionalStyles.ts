@@ -521,3 +521,22 @@ export const autoWidth: React.CSSProperties = {
 export const withoutPadding: React.CSSProperties = {
     paddingLeft: 0
 }
+
+export const titleSmallStyle: React.CSSProperties = {
+    fontWeight: "bold",
+    fontFamily: "Arial",
+    fontSize: 15
+}
+
+export const anotherForParagraph: React.CSSProperties = {
+    marginBottom: 0,
+    color: grayColor
+}
+
+export const anotherForParagraphStyle: React.CSSProperties = {
+    color: grayColor
+}
+
+export const withoutMarginBottom: React.CSSProperties = {
+    marginBottom: 0
+}

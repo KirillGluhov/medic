@@ -32,6 +32,7 @@ function CreationInspectionFormWrapper()
             form={form}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            requiredMark={false}
         >
             <Row gutter={[16,16]}>
                 <Col span={24}>
