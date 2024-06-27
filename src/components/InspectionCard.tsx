@@ -44,12 +44,12 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onCl
 
     const [grouped, setGrouped] = useState(false);
 
-    const {Inspection, setInspection} = usePatientAndInspection();
+    //const {Inspection, setInspection} = usePatientAndInspection();
 
     const handleCreateInspection = () =>
     {
         const idOfInspection = inspection.id;
-        setInspection(idOfInspection);
+        localStorage.setItem("inspection", idOfInspection);
         navigate("/inspection/create");
     }
 

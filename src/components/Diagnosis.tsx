@@ -14,7 +14,7 @@ import {
     blackColorStyle,
     smallWidth,
     commentaryStyle,
-    withoutMarginBottom
+    withoutMarginBottom,
 } from "../styles/additionalStyles";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -110,6 +110,22 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
         }
     },[previousInspectionId])
 
+    useEffect(() => {
+        axios.get(baseUrl + 'dictionary/icd10', {
+            params: {
+              page: 1,
+              size: 5
+            }
+        })
+        .then(response => {
+            console.log(response);
+            setOptions(response.data.records);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    },[])
+
     const getPanelValue = (data: string) => {
 
         console.log(data);
@@ -146,48 +162,6 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
     
         return Promise.resolve();
       };
-
-    const handleKey = (event: any) => {
-        const addValue = event.key;
-        const mainValue = event.target.value;
-        
-
-        if (addValue.length > 1)
-        {
-            axios.get(baseUrl + 'dictionary/icd10', {
-                params: {
-                  page: 1,
-                  size: 5,
-                  request: mainValue
-                }
-            })
-            .then(response => {
-                console.log(response.data.records);
-                setOptions(response.data.records);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        }
-        else
-        {
-            axios.get(baseUrl + 'dictionary/icd10', {
-                params: {
-                  page: 1,
-                  size: 5,
-                  request: mainValue + addValue
-                }
-            })
-            .then(response => {
-                console.log(response.data.records);
-                setOptions(response.data.records);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        }
-    }
-    
     
     return (<Card style={{...inspectionCardStyle}}>
         <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}}>Диагнозы</Typography.Title>
@@ -251,9 +225,18 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
                     style={{...blackColorStyle, ...cardSizeStyle}}
                     buttonStyle="solid"
                 >
-                    <Radio value={"Main"}><span>Основной</span></Radio>
-                    <Radio value={"Concomitant"}>Сопутствующий</Radio>
-                    <Radio value={"Complication"}>Осложнение</Radio>
+                    <Radio 
+                        value={"Main"} 
+                        className="verticalRadioGroup"
+                    >Основной</Radio>
+                    <Radio 
+                        value={"Concomitant"} 
+                        className="verticalRadioGroup"
+                    >Сопутствующий</Radio>
+                    <Radio 
+                        value={"Complication"} 
+                        className="verticalRadioGroup"
+                    >Осложнение</Radio>
                 </Radio.Group>
             </Form.Item>
         </React.Fragment>

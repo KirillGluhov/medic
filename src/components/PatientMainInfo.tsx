@@ -45,11 +45,11 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
     const navigate = useNavigate();
 
     const [localPatientInfo, setLocalPatientInfo] = useState<PatientInfo | null>(null);
-    const {Inspection, setInspection} = usePatientAndInspection();
+    //const {Inspection, setInspection} = usePatientAndInspection();
 
     const handleCreateInspection = () =>
     {
-        setInspection('');
+        localStorage.setItem("inspection", '');
         navigate('/inspection/create');
     }
 

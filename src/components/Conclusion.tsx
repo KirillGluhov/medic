@@ -83,7 +83,7 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
     return (<Card style={{...inspectionCardStyle}}>
         <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}}>Заключение</Typography.Title>
         <Row gutter={[16,16]}>
-            <Col span={8}>
+            <Col md={8} span={12}>
                 <span style={commentaryStyle}>Заключение</span>
                 <Form.Item
                     name="conclusion"
@@ -109,10 +109,9 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
             </Col>
             {
                 (conclusionValue === "Disease") ? 
-                <Col span={8}>
+                <Col md={8} span={12}>
+                    <span style={commentaryStyle}>Дата осмотра</span>
                     <Form.Item
-                        layout="vertical"
-                        label="Дата осмотра"
                         name="nextVisitDate"
                     >
                         <DatePicker 
@@ -136,10 +135,9 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
                     </Form.Item>
                 </Col> : 
                 (conclusionValue === "Death") ?
-                <Col span={8}>
+                <Col md={8} span={12}>
+                    <span style={commentaryStyle}>Дата и время смерти</span>
                     <Form.Item
-                        layout="vertical"
-                        label="Дата и время смерти"
                         name="deathDate"
                     >
                         <DatePicker 

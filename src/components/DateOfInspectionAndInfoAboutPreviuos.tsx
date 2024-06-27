@@ -54,7 +54,13 @@ interface InspectionShort
 
 const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAboutPreviuosProps> = ({form}) =>
 {
-    const {Inspection, setInspection} = usePatientAndInspection();
+    const [Inspection, setInspection] = useState(() => {
+        return localStorage.getItem('inspection') || ''
+    });
+
+    const [Patient, setPatient] = useState(() => {
+        return localStorage.getItem("patient") || ''
+    })
 
     const isRepeatInspectionValue = Form.useWatch('isRepeatInspection', form);
 
@@ -75,7 +81,7 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
     };
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections?grouped=true&page=1&size=1`, 
+        axios.get(baseUrl + `patient/${Patient}/inspections?grouped=true&page=1&size=1`, 
         { 
             headers: { 
                 'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -161,7 +167,7 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
 
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}`,
+        axios.get(baseUrl + `patient/${Patient}`,
             { 
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -178,7 +184,7 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
     },[])
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections/search`,
+        axios.get(baseUrl + `patient/${Patient}/inspections/search`,
             { 
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -251,19 +257,21 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
                     <Form.Item
                         name="isRepeatInspection"
                         layout="horizontal"
+                        className="isRepeatInspection"
                         label={<span style={styleOfInspectionLabel} className="inspectionLabel">Первичный осмотр</span>}
                     >
                         <Switch 
+                            className="mySwitch"
                             style={{...filterSwitchStyle}}
                         />
                     </Form.Item>
                     <span style={spanStyle}>Повторный осмотр</span>
                 </Col>
             </Row>
-            {
-                isRepeatInspectionValue ? 
-                <Row>
-                    <Col span={8}>
+            <Row>
+                {
+                    isRepeatInspectionValue ? 
+                    <Col xl={8} md={12} sm={15} span={24}>
                         <span style={commentaryStyle}>Предыдущий осмотр</span>
                         <Form.Item
                             name="previousInspectionId"
@@ -275,23 +283,21 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
                             ]}
                         >
                             <Select 
-                                style={{...textAreaStyle}} 
                                 placeholder="Выберите осмотр"
+                                onChange={handleChange}
+                                style={{...textAreaStyle}} 
                                 options={inspections.filter(insp => insp.id !== deathId).map(insp => ({
                                     value: insp.id,
                                     desc: insp.date,
                                     label: changeFormatToDateAndTime(insp.date) + " " + insp.diagnosis.code + " - " + insp.diagnosis.name
                                 }))}
-                                onChange={handleChange}
                             />
                         </Form.Item>
-                    </Col>
-                </Row> : 
-                null
-            }
-            
+                    </Col> : null
+                }
+            </Row>
             <Row>
-                <Col span={8}>
+                <Col xl={8} md={12} sm={15} span={24}>
                     <span style={commentaryStyle}>Дата осмотра</span>
                     <Form.Item
                         name="date"

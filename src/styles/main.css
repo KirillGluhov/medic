@@ -225,3 +225,27 @@ label::after
     width: 10px;
     background-color: red;
 }
+
+@media (max-width: 575px) {
+    .verticalRadioGroup {
+        display: block;
+    }
+}
+
+@media (max-width: 575px) {
+    .ant-col.ant-form-item-label:has(label[for="isRepeatInspection"])
+    {
+        flex: none !important;
+        padding-bottom: 0 !important;
+    }
+
+    .ant-form-item-control-input-content:has(.mySwitch)
+    {
+        flex: none !important;
+    }
+
+    .ant-col.ant-form-item-control:has(.mySwitch)
+    {
+        flex: none !important;
+    }
+}
