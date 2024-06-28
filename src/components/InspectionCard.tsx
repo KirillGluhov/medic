@@ -34,23 +34,27 @@ interface InspectionCardProps
     inspection: InspectionPreview,
     onClickOpen?: MouseEventHandler<HTMLSpanElement>,
     hidden?: boolean,
-    currentNumber: number | null
+    currentNumber: number | null,
+    shouldPatient: boolean
 }
 
-const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onClickOpen, hidden, currentNumber}) =>
+const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onClickOpen, hidden, currentNumber, shouldPatient}) =>
 {
     const location = useLocation();
     const navigate = useNavigate();
 
     const [grouped, setGrouped] = useState(false);
 
-    //const {Inspection, setInspection} = usePatientAndInspection();
-
     const handleCreateInspection = () =>
     {
         const idOfInspection = inspection.id;
         localStorage.setItem("inspection", idOfInspection);
         navigate("/inspection/create");
+    }
+
+    const handleOpenInspection = () => {
+        const idOfInspection = inspection.id;
+        navigate(`/inspection/${idOfInspection}`)
     }
 
     const handleClick = () => {
@@ -141,7 +145,7 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onCl
             <Col>
                 <Row gutter={10}>
                     <Col>
-                        {(inspection.conclusion === "Death" || inspection.hasNested) ? null : <Typography.Paragraph 
+                        {(inspection.conclusion === "Death" || inspection.hasNested || !shouldPatient) ? null : <Typography.Paragraph 
                             style={
                                 {
                                     ...textStyle, 
@@ -161,9 +165,11 @@ const InspectionCard: React.FC<InspectionCardProps> = ({number, inspection, onCl
                                 {
                                     ...textStyle, 
                                     ...textInspectionColor, 
-                                    ...improveColumn
+                                    ...improveColumn,
                                 }
                             }
+                            className="openInspection"
+                            onClick={handleOpenInspection}
                         >
                             <SearchOutlined style={bigAndMargin}/>Детали осмотра
                         </Typography.Paragraph>

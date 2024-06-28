@@ -65,7 +65,7 @@ const tagRender: TagRender = (props) => {
     );
 };
 
-const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
+const FilterBlockConsultation: React.FC<FilterBlockProps> = ({filterValues}) =>
 {
     const [form] = Form.useForm();
     const [radio, setradio] = useState("false");
@@ -185,17 +185,9 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
             newAdress = "?" + newAdress.substring(1);
         }
 
-        console.log(`/patient/${location.pathname.split("/")[2]}/${newAdress}`)
-
         form.resetFields();
 
-        console.log("129", filterValues);
-        console.log("1291", values);
-
-        navigate(`/patients/${location.pathname.split("/")[2]}/${newAdress}`);
-
-        console.log("130", filterValues);
-        console.log("1301", values);
+        navigate(`/consultations/${newAdress}`);
 
         form.resetFields();
     };
@@ -296,4 +288,4 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
     </Card>)
 }
 
-export default FilterBlock;
+export default FilterBlockConsultation;

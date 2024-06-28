@@ -126,7 +126,7 @@ function HeaderMain()
                                     <Paragraph style={headerParagraphMenuStyle} onClick={() => {navigate("/patients/")}}>Пациенты</Paragraph>
                                 </Col>
                                 <Col lg={7} md={7} sm={24} xs={24}>
-                                    <Paragraph style={headerParagraphMenuStyle}>Консультации</Paragraph>
+                                    <Paragraph style={headerParagraphMenuStyle} onClick={() => {navigate("/consultations/")}}>Консультации</Paragraph>
                                 </Col>
                                 <Col lg={10} md={11} sm={24} xs={24}>
                                     <Paragraph style={headerParagraphMenuStyle}>Отчёты и статистика</Paragraph>

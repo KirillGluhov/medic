@@ -249,3 +249,8 @@ label::after
         flex: none !important;
     }
 }
+
+.ant-card-body:has(.paddingBottom)
+{
+    padding-bottom: 24px !important;
+}

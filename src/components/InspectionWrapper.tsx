@@ -41,9 +41,10 @@ export interface InspectionPreview
 interface InspectionWrapperProps
 {
     inspections: InspectionPreview[];
+    shouldPatient: boolean
 }
 
-const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
+const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections, shouldPatient}) =>
 {
     return (
         <Row gutter={[16, 0]} style={{...rowTopStyle, ...width100, ...patientFlexCentered}}>
@@ -51,7 +52,7 @@ const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
                 {
                     Array.from(inspections).map((inspection, index) => (
                         (index % 2 == 0) ? 
-                        <InspectionInnerWrapper inspection={inspection} key={inspection.id}/>
+                        <InspectionInnerWrapper inspection={inspection} key={inspection.id} shouldPatient={shouldPatient}/>
                         : null
                     ))
                 }
@@ -60,7 +61,7 @@ const InspectionWrapper: React.FC<InspectionWrapperProps> = ({inspections}) =>
                 {
                     Array.from(inspections).map((inspection, index) => (
                         (index % 2 == 1) ? 
-                        <InspectionInnerWrapper inspection={inspection} key={inspection.id}/>
+                        <InspectionInnerWrapper inspection={inspection} key={inspection.id} shouldPatient={shouldPatient}/>
                         : null
                     ))
                 }

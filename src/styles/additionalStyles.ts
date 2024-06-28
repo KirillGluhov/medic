@@ -540,3 +540,15 @@ export const anotherForParagraphStyle: React.CSSProperties = {
 export const withoutMarginBottom: React.CSSProperties = {
     marginBottom: 0
 }
+
+export const smallBottomMargin: React.CSSProperties = {
+    marginBottom: 16
+}
+
+export const smallMarginTop: React.CSSProperties = {
+    marginTop: 16
+}
+
+export const arialText: React.CSSProperties = {
+    fontFamily: "Arial"
+}

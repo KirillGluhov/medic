@@ -5,15 +5,24 @@ import {
     cardSizeStyle, 
     registrationButton, 
     styleForWrapperContent,
-    confirmButtonStyle
+    confirmButtonStyle,
+    smallBottomMargin
 } from "../styles/additionalStyles";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
-function SaveOrDelete()
+interface SaveOrDeleteProps
 {
+    patient: string | undefined
+}
+
+const SaveOrDelete: React.FC<SaveOrDeleteProps> = ({patient}) =>
+{
+    const navigate = useNavigate();
     return (
     <Row 
         gutter={16} 
-        style={{...styleForWrapperContent, ...confirmButtonStyle}}
+        style={{...styleForWrapperContent, ...confirmButtonStyle, ...smallBottomMargin}}
     >
         <Col>
             <Button
@@ -40,6 +49,7 @@ function SaveOrDelete()
                         ...boldText
                     }
                 }
+                onClick={() => navigate(`/patient/${patient}/`)}
             >
                 Отмена
             </Button>

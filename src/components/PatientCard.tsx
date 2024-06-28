@@ -22,7 +22,7 @@ const PatientCard: React.FC<PatientsCardProps> = ({patient}) =>
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/patients/${patient.id}`)
+        navigate(`/patient/${patient.id}`)
     }
 
     return (<Card style={{...filterCardStyle, ...cursorPointerStyle}} onClick={handleClick}>

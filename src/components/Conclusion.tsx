@@ -17,31 +17,6 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
 {
     const conclusionValue = Form.useWatch("conclusion", form);
     const currentInspection = Form.useWatch("date", form);
-    const [isHaveDeath, setIsHaveDeath] = useState(false);
-
-    useEffect(() => {
-        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections?grouped=true&page=1&size=1`, 
-        { 
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem("token")}` 
-            } 
-        })
-        .then(response => {
-            console.log(response);
-            (
-                response.data 
-                && response.data.inspections 
-                && response.data.inspections[0] 
-                && response.data.inspections[0].conclusion 
-                && response.data.inspections[0].conclusion === "Death"
-            ) 
-                ? setIsHaveDeath(true) 
-                : setIsHaveDeath(false)
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    })
 
     const range = (start: number, end: number) => {
         const result = [];
@@ -96,10 +71,7 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
                 >
                 <Select
                 
-                options={isHaveDeath ? [
-                    { value: 'Disease', label: 'Болезнь' },
-                    { value: 'Recovery', label: 'Выздоровление' },
-                ] : [
+                options={[
                     { value: 'Disease', label: 'Болезнь' },
                     { value: 'Recovery', label: 'Выздоровление' },
                     { value: 'Death', label: 'Смерть' }
@@ -122,13 +94,7 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
                                 type: 'mask',
                             }}
                             suffixIcon={<CalendarOutlined style={datePickerStyle} />}
-                            minDate=
-                            {
-                                currentInspection ? 
-                                dayjs(currentInspection, 'YYYY-MM-DD HH:mm') : 
-                                dayjs('1900-01-01T00:00', 'YYYY-MM-DD HH:mm')
-
-                            }
+                            minDate={dayjs()}
                             disabledTime={disabledTime}
                             style={{...textAreaStyle, ...datePickerStyle}}
                         />

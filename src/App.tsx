@@ -9,6 +9,8 @@ import Profile from './pages/Profile';
 import Patients from './pages/Patients';
 import OnePatient from './pages/OnePatient';
 import CreationOfInspections from './pages/CreationOfInspection';
+import Consultations from './pages/Consultations';
+import Inspection from './pages/Inspection';
 
 function App()
 {
@@ -37,8 +39,10 @@ function App()
             
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/patients' element={<Patients/>}/>
-            <Route path='/patients/:id' element={<OnePatient/>}/>
+            <Route path='/patient/:id' element={<OnePatient/>}/>
             <Route path='/inspection/create' element={<CreationOfInspections/>}/>
+            <Route path='/consultations' element={<Consultations/>}/>
+            <Route path='/inspection/:id' element={<Inspection/>}/>
         </Routes>
     )
 }

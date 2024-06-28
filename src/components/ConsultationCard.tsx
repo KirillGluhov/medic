@@ -1,15 +1,18 @@
-import { Empty, Flex, Typography } from "antd";
+import { Col, Empty, Flex, Row, Typography } from "antd";
 import PatientMainInfo, { PatientInfo } from "./PatientMainInfo";
 import FilterBlock from "./FilterBlock";
 import InspectionWrapper from "./InspectionWrapper";
 import PageList, { Page } from "./PageList";
-import { cardTitle, centeredStyle, contentWrapper, flexCentered, flexCenteredStyle } from "../styles/additionalStyles";
+import { cardTitle, centeredStyle, changeMarginBottom, changeMarginTop, contentWrapper, flexCentered, flexCenteredStyle, rowJustifyBetween } from "../styles/additionalStyles";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
 import { existTypeOfICD, isNatural, isNaturalNumberInRange } from "../functions/smallFunctions";
 import { error } from "console";
+import FilterBlockConsultation from "./FilterBlockConsultation";
+
+const {Paragraph, Title} = Typography;
 
 export interface icd10
 {
@@ -19,13 +22,12 @@ export interface icd10
     createTime: string
 }
 
-function CardCurrentPatient()
+function ConsultationCard()
 {
     const location = useLocation();
     const [filterValues, setFilterValues] = useState({});
     const [pageInfo, setPageInfo] = useState<Page | null>(null);
     const [inspections, setInspections] = useState([]);
-    const [patientInfo, setPatientInfo] = useState<PatientInfo| null>(null);
 
     useEffect(() => {
 
@@ -154,7 +156,7 @@ function CardCurrentPatient()
             console.log(objectWithFilterAndSorting) 
         }
 
-        axios.get(baseUrl + `patient/${id}/inspections` + queryString, 
+        axios.get(baseUrl + `consultation` + queryString, 
             { 
                 headers: { 
                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
@@ -176,36 +178,39 @@ function CardCurrentPatient()
     
     return (
     <Flex style={{...contentWrapper}}>
-        <PatientMainInfo setPatientInfo={setPatientInfo}/>
-        {(patientInfo && inspections && pageInfo && pageInfo.current <= pageInfo.count) ? 
+        <Row style={{...rowJustifyBetween, ...changeMarginBottom, ...changeMarginTop}}>
+            <Col>
+                <Title style={cardTitle}>Консультации</Title>
+            </Col>
+        </Row>
+        {(inspections && pageInfo && pageInfo.current <= pageInfo.count) ? 
         <>
-            <FilterBlock filterValues={filterValues}/>
-            <InspectionWrapper inspections={inspections} shouldPatient={true}/>
+            <FilterBlockConsultation filterValues={filterValues}/>
+            <InspectionWrapper inspections={inspections} shouldPatient={false}/>
             <Flex style={flexCenteredStyle}>
-                <PageList pageInfo={pageInfo} urlo={`/patient/${location.pathname.split("/")[2]}/`}/>
+                <PageList pageInfo={pageInfo} urlo={`/consultations/`}/>
             </Flex>
         </> : 
-        (patientInfo && pageInfo) ? 
+        (pageInfo) ? 
         <>
-            <FilterBlock filterValues={filterValues}/>
+            <FilterBlockConsultation filterValues={filterValues}/>
             <Empty description={
                 <Typography style={cardTitle}>Нет осмотров</Typography>
             }/>
             <Flex style={flexCenteredStyle}>
-                <PageList pageInfo={pageInfo} urlo={`/patient/${location.pathname.split("/")[2]}/`}/>
+                <PageList pageInfo={pageInfo} urlo={`/consultations/`}/>
             </Flex>
-        </> : 
-        (patientInfo) ? 
+        </> :
         <>
-            <FilterBlock filterValues={filterValues}/>
+            <FilterBlockConsultation filterValues={filterValues}/>
             <Empty description={
                 <Typography style={cardTitle}>Нет такой страницы</Typography>
             }/>
             <Flex style={flexCenteredStyle}>
-                <PageList pageInfo={pageInfo} urlo={`/patient/${location.pathname.split("/")[2]}/`}/>
+                <PageList pageInfo={pageInfo} urlo={`/consultations/`}/>
             </Flex>
-        </> : null}
+        </>}
     </Flex>);
 }
 
-export default CardCurrentPatient;
+export default ConsultationCard;

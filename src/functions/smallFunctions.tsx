@@ -1,6 +1,7 @@
 import axios from "axios";
 import { icd10 } from "../components/CardCurrentPatient";
 import { baseUrl } from "../const/constValues";
+import { Consultation, Diagnoses } from "../components/CreationInspectionFormWrapper";
 
 export function chooseErrorMessage(errorMessage: string)
 {
@@ -116,5 +117,71 @@ export function findType(value: string)
             return "осложнение"
         default:
             return value;
+    }
+}
+
+export function collectDiagnoses(
+    diagnoses: Diagnoses[], 
+    icdDiagnosisId: string, 
+    description: string | undefined, 
+    type: "Main" | "Concomitant" | "Complication"
+)
+{
+    if (!diagnoses)
+    {
+        return [{
+            icdDiagnosisId: icdDiagnosisId,
+            description: description,
+            type: type
+        }];
+    }
+    else
+    {
+        const diags = diagnoses;
+        diags.unshift({
+            icdDiagnosisId: icdDiagnosisId,
+            description: description,
+            type: type
+        })
+        return diags;
+    }
+}
+
+export function collectConsultations(
+    consultations: Consultation[] | undefined, 
+    specialityId: string | undefined, 
+    comment: string | undefined
+)
+{
+    if (!specialityId || !comment)
+    {
+        return null;
+    }
+    else if (!consultations)
+    {
+        return [{
+            specialityId: specialityId,
+            comment: {
+                content: comment
+            }
+        }]
+    }
+    else
+    {
+        const cons = [{
+            specialityId: specialityId,
+            comment: {
+                content: comment
+            }
+        }]
+
+        const newConsultations = consultations.map(item => ({
+            specialityId: item.specialityId,
+            comment: {
+                content: item.comment
+            }
+        }))
+
+        return newConsultations.concat(cons);
     }
 }

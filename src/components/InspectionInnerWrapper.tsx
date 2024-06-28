@@ -10,10 +10,11 @@ import { useLocation } from "react-router-dom";
 
 interface InspectionInnerProps
 {
-    inspection: InspectionPreview
+    inspection: InspectionPreview,
+    shouldPatient: boolean
 }
 
-const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection}) =>
+const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection, shouldPatient}) =>
 {
     const location = useLocation();
     const [additionalInspections, setAdditionalInspections] = useState<InspectionPreview[]>([]);
@@ -87,6 +88,7 @@ const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection}) =>
             inspection={inspection}
             onClickOpen={() => handleClick(0)}
             currentNumber={selectNumber}
+            shouldPatient={shouldPatient}
         />
         {
             grouped ?
@@ -98,6 +100,7 @@ const InspectionInnerWrapper: React.FC<InspectionInnerProps> = ({inspection}) =>
                     onClickOpen={() => handleClick(index+1)}
                     hidden={selectNumber !== null && index + 1 > selectNumber}
                     currentNumber={selectNumber}
+                    shouldPatient={shouldPatient}
                 />
             )) :
             null

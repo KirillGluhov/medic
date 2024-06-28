@@ -153,7 +153,7 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
     
         if (previousInspectionId === undefined)
         {
-            const hasMain = typeFirst === 'Main' || diagnoses.some((diag: { type: string; }) => diag.type === 'Main');
+            const hasMain = typeFirst === 'Main' || diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
 
             if (!hasMain) {
                 return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
