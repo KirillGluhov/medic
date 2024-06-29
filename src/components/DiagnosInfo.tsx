@@ -22,12 +22,15 @@ import { baseUrl } from "../const/constValues";
 import { DiagnosisModel, InspectionPreview } from "./InspectionWrapper";
 import { findType } from "../functions/smallFunctions";
 import { PlusOutlined } from "@ant-design/icons";
+import { DiagnosisFullModel } from "./DetailsInspection";
 
 const { Option } = AutoComplete;
 
-interface DiagnosisProps
+interface DiagnosProps
 {
     form: FormInstance<any>;
+    previousInspectionId?: string;
+    diagnosises?: DiagnosisFullModel[]
 }
 
 interface ICD
@@ -62,13 +65,11 @@ const DisplayElement = (value: string) => {
     );
   };
 
-const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
+const DiagnosInfo: React.FC<DiagnosProps> = ({form, previousInspectionId, diagnosises}) =>
 {
     const [options, setOptions] = useState<ICD[]>([]);
 
     const [inspectionInfo, setInspectionInfo] = useState<InspectionFull | null>(null);
-
-    const previousInspectionId = Form.useWatch("previousInspectionId", form);
 
     useEffect(() => {
         if (previousInspectionId)
@@ -129,15 +130,11 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
 
     const validateMainType = (_: any, value: any) => {
         const diagnoses = form.getFieldValue('diagnoses') || [];
-        const typeFirst = form.getFieldValue('typeFirst') || null;
     
-        if (previousInspectionId === undefined)
-        {
-            const hasMain = typeFirst === 'Main' || diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
+        const hasMain = diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
 
-            if (!hasMain) {
-                return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
-            }
+        if (!hasMain) {
+            return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
         }
     
         return Promise.resolve();
@@ -153,73 +150,6 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
             </React.Fragment>
         ))}
         <span style={commentaryStyle}>Болезни</span>
-        <React.Fragment>
-            <Form.Item
-                name={'icdDiagnosisIdFirst'}
-                rules={[{ required: true, message: 'Пожалуйста, выберите диагноз' }]}
-            >
-                <Select
-                    filterOption={false}
-                    showSearch
-                    onSearch={getPanelValue}
-                    options={options.map(option => ({
-                        value: option.id,
-                        label: DisplayElement(option.code + " - " + option.name),
-                    }))}
-                />
-            </Form.Item>
-            <Form.Item
-                name={'descriptionFirst'}
-                style={withoutMarginBottom}
-                rules={[
-                    {
-                        validator(_, value) {
-                            if (value && (value.length > 5000))
-                            {
-                                return Promise.reject('Длина описания должна быть не больше 5000');
-                            }
-                            return Promise.resolve();   
-                        },
-                    }
-                ]}
-            >
-                <Input/>
-            </Form.Item>
-            <span style={commentaryStyle}>Тип диагноза в осмотре</span>
-            <Form.Item
-                style={{...withoutMarginBottom}}
-                name={'typeFirst'}
-                rules={
-                    [
-                        { 
-                            required: true, 
-                            message: 'Вы не выбрали тип' 
-                        },
-                        { 
-                            validator: validateMainType 
-                        }
-                    ]
-                }
-            >
-                <Radio.Group 
-                    style={{...blackColorStyle, ...cardSizeStyle}}
-                    buttonStyle="solid"
-                >
-                    <Radio 
-                        value={"Main"} 
-                        className="verticalRadioGroup"
-                    >Основной</Radio>
-                    <Radio 
-                        value={"Concomitant"} 
-                        className="verticalRadioGroup"
-                    >Сопутствующий</Radio>
-                    <Radio 
-                        value={"Complication"} 
-                        className="verticalRadioGroup"
-                    >Осложнение</Radio>
-                </Radio.Group>
-            </Form.Item>
-        </React.Fragment>
         <Form.List name="diagnoses">
             {(fields, {add}) => (
                 <>
@@ -233,10 +163,18 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
                                     filterOption={false}
                                     showSearch
                                     onSearch={getPanelValue}
-                                    options={options.map(option => ({
-                                        value: option.id,
-                                        label: DisplayElement(option.code + " - " + option.name),
-                                    }))}
+                                    options={[
+                                        ...options.map(option => ({
+                                          value: option.id,
+                                          label: DisplayElement(option.code + " - " + option.name),
+                                        })),
+                                        ...(diagnosises && diagnosises[key] ? [
+                                          {
+                                            value: diagnosises[key].id,
+                                            label: DisplayElement(diagnosises[key].code + " - " + diagnosises[key].name)
+                                          }
+                                        ] : [])
+                                    ]}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -301,4 +239,4 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
     </Card>);
 }
 
-export default Diagnosis;
+export default DiagnosInfo;

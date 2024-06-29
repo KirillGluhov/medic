@@ -2,6 +2,7 @@ import axios from "axios";
 import { icd10 } from "../components/CardCurrentPatient";
 import { baseUrl } from "../const/constValues";
 import { Consultation, Diagnoses } from "../components/CreationInspectionFormWrapper";
+import dayjs from "dayjs";
 
 export function chooseErrorMessage(errorMessage: string)
 {
@@ -61,6 +62,20 @@ export function chooseConclusion(value: string)
     }
 }
 
+export function chooseConclusionUpper(value: string)
+{
+    switch (value) {
+        case "Disease":
+            return "Болезнь";
+        case "Recovery":
+            return "Восстановление";
+        case "Death":
+            return "Смерть";
+        default:
+            return "";
+    }
+}
+
 export function existTypeOfICD(value: string, icds: icd10[])
 {
     for (let i = 0; i < icds.length; i++)
@@ -97,6 +112,19 @@ export function changeFormatToDateAndTime(value: string)
     const timeSplit = timePart.split(":");
 
     return dateSplit[2] + "." + dateSplit[1] + "." + dateSplit[0] + " " + timeSplit[0] + ":" + timeSplit[1];
+}
+
+export function changeFormatToDateAndTimeWithHyphen(value: string)
+{
+    const allDate = value.split("T");
+
+    const datePart = allDate[0];
+    const timePart = allDate[1];
+
+    const dateSplit = datePart.split("-");
+    const timeSplit = timePart.split(":");
+
+    return dateSplit[2] + "." + dateSplit[1] + "." + dateSplit[0] + " - " + timeSplit[0] + ":" + timeSplit[1];
 }
 
 export function deleteLastSemicolon(value: string)
@@ -183,5 +211,31 @@ export function collectConsultations(
         }))
 
         return newConsultations.concat(cons);
+    }
+}
+
+export function chooseGender(value: string)
+{
+    switch (value) {
+        case "Female":
+            return "женский";
+        case "Male":
+            return "мужской";
+        default:
+            return "";
+    }
+}
+
+export function inRange(date: string)
+{
+    const dateJS = dayjs(date);
+
+    if (dateJS.isAfter(dayjs('1900-01-01')) && (dateJS.isBefore(dayjs()) || dateJS.isSame(dayjs())))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }

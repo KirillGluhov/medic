@@ -46,7 +46,7 @@ interface FilterBlockProps
     };
 }
 
-const tagRender: TagRender = (props) => {
+export const tagRender: TagRender = (props) => {
     const { label, value, closable, onClose } = props;
     const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
         event.preventDefault();
@@ -150,7 +150,7 @@ const FilterBlockConsultation: React.FC<FilterBlockProps> = ({filterValues}) =>
 
         }
 
-        console.log("2444", filterValues);
+        //console.log("2444", filterValues);
     },[filterValues, rootICD])
 
     const onFinishFailed: FormProps<FilterType>['onFinishFailed'] = (errorInfo) => {

@@ -1,4 +1,4 @@
-import { Card, Form, Input, Typography } from "antd";
+import { Card, Form, FormInstance, Input, Typography } from "antd";
 import { 
     filterCardStyle, 
     titleInOneBlockStyle,
@@ -6,6 +6,7 @@ import {
     textAreaStyle,
     inspectionCardStyle
 } from "../styles/additionalStyles";
+import { useEffect } from "react";
 
 const { TextArea } = Input;
 

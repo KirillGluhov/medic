@@ -1,7 +1,9 @@
-import { Card, Form, Input, Typography } from "antd";
+import { Card, Form, FormInstance, Input, Typography } from "antd";
 import { filterCardStyle, inspectionCardStyle, textAreaStyle, titleInOneBlockStyle, withoutPaddingTop } from "../styles/additionalStyles";
+import React, { useEffect } from "react";
 
 const { TextArea } = Input;
+
 
 function Anamnesis()
 {

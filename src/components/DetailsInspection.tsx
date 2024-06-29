@@ -1,12 +1,16 @@
-import { Col, Empty, Flex, Row, Typography } from "antd";
+import { Col, Empty, Flex, Row, Typography, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { baseUrl } from "../const/constValues";
-import { cardTitle, contentWrapper, smallMarginTop } from "../styles/additionalStyles";
+import { cardTitle, centeredStyle, contentWrapper, smallMarginTop } from "../styles/additionalStyles";
 import Complaint from "./Complaint";
+import ConclusionCard from "./ConclusionCard";
+import Diagnos from "./Diagnos";
+import MainDetails from "./MainDetails";
+import ConsultationsList from "./ConsultationsList";
 
-type PatientModel = {
+export type PatientModel = {
     id: string,
     createTime: string,
     name: string,
@@ -14,7 +18,7 @@ type PatientModel = {
     gender: "Male" | "Female"
 }
 
-type DoctorModel = {
+export type DoctorModel = {
     id: string,
     createTime: string,
     name: string,
@@ -24,7 +28,7 @@ type DoctorModel = {
     phone?: string
 }
 
-type DiagnosisFullModel = {
+export type DiagnosisFullModel = {
     id: string,
     createTime: string,
     code: string,
@@ -48,7 +52,7 @@ type InspectionCommentModel = {
     modifyTime?: string
 }
 
-type InspectionConsultationModel = {
+export type InspectionConsultationModel = {
     id: string,
     createTime: string,
     inspectionId?: string,
@@ -57,7 +61,7 @@ type InspectionConsultationModel = {
     commentsNumber?: number
 }
 
-type InspectionFull = {
+export type InspectionFull = {
     id: string,
     createTime: string,
     date: string,
@@ -79,6 +83,29 @@ function DetailsInspection()
 {
     const location = useLocation();
     const [currentInspection, setCurrentInspection] = useState<InspectionFull | null>(null);
+
+    const showMessage = () => {
+        message.success("Осмотр успешно обновлён")
+    }
+
+    const reGetInspection = () => {
+        let id = location.pathname.split("/")[2];
+
+        axios.get(baseUrl + `inspection/${id}`, 
+            { 
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem("token")}` 
+                } 
+            }
+        )
+        .then(response => {
+            console.log(response.data);
+            setCurrentInspection(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
     
     useEffect(() => {
         let id = location.pathname.split("/")[2];
@@ -98,14 +125,22 @@ function DetailsInspection()
             console.log(error);
         })
     },[location])
+
     return (
         <Flex style={{...contentWrapper, ...smallMarginTop}}>
-            <Row gutter={[16,16]}>
+            <Row gutter={[16,16]} >
                 {
                     currentInspection ? 
                     <>
                         <Col span={24}>
-                            {/**/} 
+                            <MainDetails 
+                                date={currentInspection.date} 
+                                patient={currentInspection.patient} 
+                                doctor={currentInspection.doctor}
+                                inspection={currentInspection}
+                                reGet={reGetInspection}
+                                showMessage={showMessage}
+                            /> 
                         </Col>
                         <Col span={24}>
                             <Complaint text={currentInspection.complaints} title="Жалобы"/>
@@ -114,19 +149,23 @@ function DetailsInspection()
                             <Complaint text={currentInspection.anamnesis} title="Анамнез заболевания"/>
                         </Col>
                         <Col span={24}>
-                            {/**/}
+                            <ConsultationsList consultations={currentInspection.consultations}/>
                         </Col>
                         <Col span={24}>
                             {/**/}
                         </Col>
                         <Col span={24}>
-                            {/**/}
+                            <Diagnos diagnoses={currentInspection.diagnoses}/>
                         </Col>
                         <Col span={24}>
                             <Complaint text={currentInspection.treatment} title="Рекомендации по лечению"/>
                         </Col>
                         <Col span={24}>
-                            {/**/}
+                            <ConclusionCard 
+                                conclusion={currentInspection.conclusion} 
+                                death={currentInspection.deathDate} 
+                                nextVisit={currentInspection.nextVisitDate}
+                            />
                         </Col>
                     </> : 
                     <Empty description={

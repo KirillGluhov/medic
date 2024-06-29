@@ -552,3 +552,22 @@ export const smallMarginTop: React.CSSProperties = {
 export const arialText: React.CSSProperties = {
     fontFamily: "Arial"
 }
+
+export const smallMarginBottom: React.CSSProperties = {
+    marginBottom: 12
+}
+
+export const smallestMarginBottom: React.CSSProperties = {
+    marginBottom: 6
+}
+
+export const bigTitle: React.CSSProperties = {
+    fontFamily: "Arial",
+    fontSize: 27,
+    color: titleColor
+}
+
+export const justifySpaceAndAlignCenterStyle: React.CSSProperties = {
+    justifyContent: 'space-between',
+    alignItems: 'center'
+}

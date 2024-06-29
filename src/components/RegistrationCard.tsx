@@ -67,6 +67,7 @@ function RegistrationCard()
             .then(response => {
                 console.log(response);
                 localStorage.setItem("name", response.data.name);
+                localStorage.setItem("me", response.data.id);
                 setIsName(response.data.name);
                 navigate("/patients/");
             })

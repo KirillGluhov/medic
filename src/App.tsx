@@ -11,6 +11,7 @@ import OnePatient from './pages/OnePatient';
 import CreationOfInspections from './pages/CreationOfInspection';
 import Consultations from './pages/Consultations';
 import Inspection from './pages/Inspection';
+import Reports from './pages/Reports';
 
 function App()
 {
@@ -43,6 +44,7 @@ function App()
             <Route path='/inspection/create' element={<CreationOfInspections/>}/>
             <Route path='/consultations' element={<Consultations/>}/>
             <Route path='/inspection/:id' element={<Inspection/>}/>
+            <Route path='/reports' element={<Reports/>}/>
         </Routes>
     )
 }

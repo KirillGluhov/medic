@@ -11,9 +11,10 @@ import { error } from "console";
 interface ConclusionProps
 {
     form: FormInstance<any>;
+    fromModal?: boolean
 }
 
-const Conclusion: React.FC<ConclusionProps> = ({form}) =>
+const Conclusion: React.FC<ConclusionProps> = ({form, fromModal}) =>
 {
     const conclusionValue = Form.useWatch("conclusion", form);
     const currentInspection = Form.useWatch("date", form);
@@ -56,7 +57,7 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
     };
 
     return (<Card style={{...inspectionCardStyle}}>
-        <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}}>Заключение</Typography.Title>
+        <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}} className="paddingBottom">Заключение</Typography.Title>
         <Row gutter={[16,16]}>
             <Col md={8} span={12}>
                 <span style={commentaryStyle}>Заключение</span>
@@ -81,8 +82,8 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
             </Col>
             {
                 (conclusionValue === "Disease") ? 
-                <Col md={8} span={12}>
-                    <span style={commentaryStyle}>Дата осмотра</span>
+                <Col md={fromModal ? 12 : 8} span={12}>
+                    <span style={commentaryStyle}>Дата следующего визита</span>
                     <Form.Item
                         name="nextVisitDate"
                     >
@@ -101,7 +102,7 @@ const Conclusion: React.FC<ConclusionProps> = ({form}) =>
                     </Form.Item>
                 </Col> : 
                 (conclusionValue === "Death") ?
-                <Col md={8} span={12}>
+                <Col md={fromModal ? 12 : 8} span={12}>
                     <span style={commentaryStyle}>Дата и время смерти</span>
                     <Form.Item
                         name="deathDate"
