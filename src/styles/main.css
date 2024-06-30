@@ -3,6 +3,8 @@
     --cardTextColor: #EFEFF5;
     --secondColor: #317cb9;
     --grayColor: #aaabb5;
+    --mainColor: #1a3f76;
+    --lightColor: #f6f6fb;
 }
 
 body
@@ -253,4 +255,13 @@ label::after
 .ant-card-body:has(.paddingBottom)
 {
     padding-bottom: 24px !important;
+}
+
+.custom-table .ant-table-thead > tr > th {
+    background-color: var(--mainColor);
+    color: white
+}
+
+.custom-table .ant-table-tbody > tr > td {
+    background-color: var(--lightColor);
 }

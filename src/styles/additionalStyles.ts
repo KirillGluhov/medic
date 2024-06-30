@@ -370,6 +370,10 @@ export const genderStyle: React.CSSProperties = {
     color: cardButtonColor
 }
 
+export const genderMainStyle: React.CSSProperties = {
+    color: cardButtonColor
+}
+
 export const changeMarginTop: React.CSSProperties = {
     marginTop: 25
 }
@@ -570,4 +574,8 @@ export const bigTitle: React.CSSProperties = {
 export const justifySpaceAndAlignCenterStyle: React.CSSProperties = {
     justifyContent: 'space-between',
     alignItems: 'center'
+}
+
+export const columnStyle: React.CSSProperties = {
+    flexDirection: "column"
 }

@@ -1,6 +1,12 @@
-import { Space, Table, TableProps, Tag } from "antd";
-import { smallMarginTop } from "../styles/additionalStyles";
+import { Col, Row, Space, Table, TableProps, Tag, Typography } from "antd";
+import { 
+  boldText, 
+  smallMarginTop, 
+  columnStyle,
+  smallMarginBottom
+ } from "../styles/additionalStyles";
 import { RecordModel, ReportModel, SummaryModel } from "./ReportsFilterAndTable";
+import { changeFormat, chooseGenderIcon, getTitleString } from "../functions/smallFunctions";
 
 /*interface DataType {
     key: string;
@@ -92,9 +98,27 @@ const TableWithData: React.FC<TableWithDataProps> = ({tableValues}) =>
 {
     const columns = [
         {
-          title: 'Пациент/Код',
+          title: 'Пациент\\Код',
           dataIndex: 'patient',
           key: 'patient',
+          fixed: true,
+          render: (patients: string[]) => (
+            <Row style={columnStyle}>
+              {patients.map((patient, index) =>(
+                <Col>
+                {
+                  index == 0 ? 
+                  <Typography style={boldText}>{patient}</Typography> : 
+                  index == 1 ? 
+                  chooseGenderIcon(patient) : 
+                  index == 2 ?
+                  <Typography>{patient ? changeFormat(patient) : "Не указано"}</Typography> : 
+                  <Typography style={boldText}>{patient}</Typography>
+                }
+                </Col>
+              ))}
+            </Row>
+          ) 
         },
         ...(tableValues.summaryByRoot ? 
           Object.entries(tableValues.summaryByRoot).map(([key]) => ({
@@ -114,7 +138,7 @@ const TableWithData: React.FC<TableWithDataProps> = ({tableValues}) =>
         }, {}) : null;
       
         return {
-            patient: `${record.patientName} ${record.gender} ${record.patientBirthdate}`,
+            patient: [`${record.patientName}`, `${record.gender}`, `${record.patientBirthdate}`],
             ...visitsByRoot,
         };
     }
@@ -126,7 +150,7 @@ const TableWithData: React.FC<TableWithDataProps> = ({tableValues}) =>
             return acc;
         }, {})
         return {
-            patient: "Суммарно",
+            patient: ["Суммарно:"],
             ...rootsValues
         }
     }
@@ -136,16 +160,15 @@ const TableWithData: React.FC<TableWithDataProps> = ({tableValues}) =>
         ...(tableValues.summaryByRoot ? [makeFromRootsObject(tableValues.summaryByRoot)] : [])
     ]
 
-    /*
-    {
-            patient: record.patientName + " " + record.gender + " " + record.patientBirthdate,
-        }
-    
-    */
-
-
     return <>
-        {<Table columns={columns} dataSource={data} pagination={false} style={smallMarginTop}/>}
+        <Table 
+          className="custom-table"
+          columns={columns} 
+          dataSource={data} 
+          pagination={false} 
+          style={{...smallMarginTop, ...smallMarginBottom}}
+          bordered
+        />
     </>;
 }
 

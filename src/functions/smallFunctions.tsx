@@ -3,6 +3,8 @@ import { icd10 } from "../components/CardCurrentPatient";
 import { baseUrl } from "../const/constValues";
 import { Consultation, Diagnoses } from "../components/CreationInspectionFormWrapper";
 import dayjs from "dayjs";
+import { ManOutlined, WomanOutlined } from "@ant-design/icons";
+import { genderMainStyle, genderStyle } from "../styles/additionalStyles";
 
 export function chooseErrorMessage(errorMessage: string)
 {
@@ -238,4 +240,25 @@ export function inRange(date: string)
     {
         return false;
     }
+}
+
+export function chooseGenderIcon(value: string)
+{
+    switch (value) {
+        case "Male":
+            return <WomanOutlined style={genderMainStyle}/>
+        case "Female":
+            return <ManOutlined style={genderMainStyle}/>
+        default:
+            return <div></div>
+    }
+}
+
+export function getTitleString(start: string | undefined, end: string | undefined)
+{
+    if (start && end)
+    {
+        return `Данные с ${changeFormat(start)} по ${changeFormat(end)}`;
+    }
+    return "";
 }
