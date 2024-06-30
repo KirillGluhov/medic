@@ -9,6 +9,7 @@ import ConclusionCard from "./ConclusionCard";
 import Diagnos from "./Diagnos";
 import MainDetails from "./MainDetails";
 import ConsultationsList from "./ConsultationsList";
+import Comments from "./Comments";
 
 export type PatientModel = {
     id: string,
@@ -148,12 +149,14 @@ function DetailsInspection()
                         <Col span={24}>
                             <Complaint text={currentInspection.anamnesis} title="Анамнез заболевания"/>
                         </Col>
+                        {(currentInspection.consultations && currentInspection.consultations.length > 0) ? 
                         <Col span={24}>
                             <ConsultationsList consultations={currentInspection.consultations}/>
-                        </Col>
+                        </Col> : null}
+                        {(currentInspection.consultations && currentInspection.consultations.length > 0) ? 
                         <Col span={24}>
-                            {/**/}
-                        </Col>
+                            <Comments consultations={currentInspection.consultations}/>
+                        </Col> : null}
                         <Col span={24}>
                             <Diagnos diagnoses={currentInspection.diagnoses}/>
                         </Col>

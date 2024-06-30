@@ -192,7 +192,7 @@ const FilterBlock: React.FC<FilterBlockProps> = ({filterValues}) =>
         console.log("129", filterValues);
         console.log("1291", values);
 
-        navigate(`/patients/${location.pathname.split("/")[2]}/${newAdress}`);
+        navigate(`/patient/${location.pathname.split("/")[2]}/${newAdress}`);
 
         console.log("130", filterValues);
         console.log("1301", values);

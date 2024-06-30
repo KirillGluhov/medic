@@ -13,6 +13,7 @@ export const grayCardColor = '#8282a1';
 export const deathColor = '#ffefe8'
 export const darkerBlueColor = '#193f76';
 export const titleColor = '#446694';
+export const orangeColor = '#ff9900';
 
 export const headerStyle: React.CSSProperties = {
     backgroundColor: mainColor,
@@ -371,7 +372,9 @@ export const genderStyle: React.CSSProperties = {
 }
 
 export const genderMainStyle: React.CSSProperties = {
-    color: cardButtonColor
+    color: cardButtonColor,
+    marginLeft: 10,
+    marginBottom: 5
 }
 
 export const changeMarginTop: React.CSSProperties = {
@@ -578,4 +581,55 @@ export const justifySpaceAndAlignCenterStyle: React.CSSProperties = {
 
 export const columnStyle: React.CSSProperties = {
     flexDirection: "column"
+}
+
+export const alignCenter: React.CSSProperties = {
+    alignItems: "center"
+}
+
+export const styleForCommentary: React.CSSProperties = {
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    fontSize: 18
+}
+
+export const biggerRight: React.CSSProperties = {
+    marginLeft: 20
+}
+
+export const smallRight: React.CSSProperties = {
+    marginLeft: 10
+}
+
+export const grayText: React.CSSProperties = {
+    color: grayColor,
+    fontFamily: "Arial"
+}
+
+export const justGray: React.CSSProperties = {
+    color: grayColor
+}
+
+export const blueColorStyle: React.CSSProperties = {
+    color: cardButtonColor
+}
+
+export const marginBottom1: React.CSSProperties = {
+    paddingBottom: 2
+}
+
+export const mainCommentStyle: React.CSSProperties = {
+
+}
+
+export const commentStyleWithMargin: React.CSSProperties = {
+    marginLeft: 20
+}
+
+export const displayNone: React.CSSProperties = {
+    display: "none"
+}
+
+export const orangeColorStyle: React.CSSProperties = {
+    backgroundColor: orangeColor
 }

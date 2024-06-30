@@ -265,3 +265,59 @@ label::after
 .custom-table .ant-table-tbody > tr > td {
     background-color: var(--lightColor);
 }
+
+.downLine
+{
+    position: relative;
+}
+
+.LElement
+{
+    position: relative;
+}
+
+.downLine::after
+{
+    content: "";
+    position: absolute;
+    background-color: var(--grayColor);
+    width: 500px;
+    height: 2px;
+    bottom: 0;
+    left: 0
+}
+
+.downLineSmaller
+{
+    position: relative;
+}
+
+.downLineSmaller::after
+{
+    content: "";
+    position: absolute;
+    background-color: var(--grayColor);
+    width: 480px;
+    height: 2px;
+    bottom: 0;
+    left: 0
+}
+
+.LElement::before
+{
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -20px;
+    width: 20px;
+    height: 30px;
+    border-left: 3px solid #e0e0e0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid #e0e0e0;
+    border-right: 3px solid transparent;
+}
+
+.onHover:hover
+{
+    cursor: pointer;
+}

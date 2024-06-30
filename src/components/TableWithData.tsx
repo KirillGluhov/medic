@@ -3,7 +3,8 @@ import {
   boldText, 
   smallMarginTop, 
   columnStyle,
-  smallMarginBottom
+  smallMarginBottom,
+  alignCenter
  } from "../styles/additionalStyles";
 import { RecordModel, ReportModel, SummaryModel } from "./ReportsFilterAndTable";
 import { changeFormat, chooseGenderIcon, getTitleString } from "../functions/smallFunctions";
@@ -103,9 +104,9 @@ const TableWithData: React.FC<TableWithDataProps> = ({tableValues}) =>
           key: 'patient',
           fixed: true,
           render: (patients: string[]) => (
-            <Row style={columnStyle}>
+            <Row style={alignCenter}>
               {patients.map((patient, index) =>(
-                <Col>
+                <Col span={index > 1 ? 24 : 'auto'}>
                 {
                   index == 0 ? 
                   <Typography style={boldText}>{patient}</Typography> : 
