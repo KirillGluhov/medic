@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { baseUrl } from "../const/constValues";
-import { cardTitle, centeredStyle, contentWrapper, smallMarginTop } from "../styles/additionalStyles";
+import { cardTitle, centeredStyle, contentWrapper, smallMarginTop, smallMarginBottom } from "../styles/additionalStyles";
 import Complaint from "./Complaint";
 import ConclusionCard from "./ConclusionCard";
 import Diagnos from "./Diagnos";
@@ -128,7 +128,7 @@ function DetailsInspection()
     },[location])
 
     return (
-        <Flex style={{...contentWrapper, ...smallMarginTop}}>
+        <Flex style={{...contentWrapper, ...smallMarginTop, ...smallMarginBottom}}>
             <Row gutter={[16,16]} >
                 {
                     currentInspection ? 

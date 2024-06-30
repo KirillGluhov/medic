@@ -88,8 +88,8 @@ const ModalInspection: React.FC<ModalInspectionProps> = ({inspection, reGet, sho
             anamnesis: inspection.anamnesis,
             treatment: inspection.treatment,
             conclusion: inspection.conclusion,
-            nextVisitDate: dayjs(inspection.nextVisitDate),
-            deathDate: dayjs(inspection.deathDate),
+            nextVisitDate: inspection.nextVisitDate ? dayjs(inspection.nextVisitDate) : undefined,
+            deathDate: inspection.deathDate ? dayjs(inspection.deathDate) : undefined,
             diagnoses: (inspection.diagnoses) ? inspection.diagnoses.map((diag) => ({
                 type: diag.type,
                 description: diag.description,

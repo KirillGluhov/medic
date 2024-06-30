@@ -5,6 +5,7 @@ import { Consultation, Diagnoses } from "../components/CreationInspectionFormWra
 import dayjs from "dayjs";
 import { ManOutlined, WomanOutlined } from "@ant-design/icons";
 import { genderMainStyle, genderStyle } from "../styles/additionalStyles";
+import { error } from "console";
 
 export function chooseErrorMessage(errorMessage: string)
 {
@@ -261,4 +262,22 @@ export function getTitleString(start: string | undefined, end: string | undefine
         return `Данные с ${changeFormat(start)} по ${changeFormat(end)}`;
     }
     return "";
+}
+
+export async function getDiagnosId(description: string): Promise<string | null>
+{
+    const code = description.split(" ")[0];
+
+    try 
+    {
+        const response = await axios.get(baseUrl + `dictionary/icd10?request=${code}&page=1&size=5`);
+        const records = response.data.records;
+        return (Array.isArray(records) && records.length > 0) ? response.data.records[0].id : null;
+    } 
+    catch (error) 
+    {
+        console.error(error);
+        return null;
+    }
+    
 }

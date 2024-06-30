@@ -55,10 +55,14 @@ const FormForCommentCreate: React.FC<FormForCommentCreateProps> = (
                 repeatConsultation();
                 messageError("У вас неподходящая специализация");
             }
+            else
+            {
+                setAnswer(false);
+                repeatConsultation();
+                messageError("Что-то пошло не так");
+            }
 
-            setAnswer(false);
-            repeatConsultation();
-            messageError("Что-то пошло не так");
+            
         })
     }
 

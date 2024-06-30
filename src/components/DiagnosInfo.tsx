@@ -134,11 +134,24 @@ const DiagnosInfo: React.FC<DiagnosProps> = ({form, previousInspectionId, diagno
         const hasMain = diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
 
         if (!hasMain) {
+            form.setFields(
+              diagnoses.map((_: any, index: any) => ({
+                name: ['diagnoses', index, 'type'],
+                errors: ['Хотя бы один диагноз должен быть основным'],
+              }))
+            );
             return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
-        }
-    
-        return Promise.resolve();
-      };
+          }
+        
+          form.setFields(
+            diagnoses.map((_: any, index: any) => ({
+              name: ['diagnoses', index, 'type'],
+              errors: [],
+            }))
+          );
+        
+          return Promise.resolve();
+    };
     
     return (<Card style={{...inspectionCardStyle}}>
         <Typography.Title style={{...titleInOneBlockStyle, ...withoutPaddingTop}}>Диагнозы</Typography.Title>

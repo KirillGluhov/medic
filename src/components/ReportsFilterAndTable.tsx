@@ -259,17 +259,22 @@ function ReportsFilterAndTable()
                 </Col>
             </Row>
             <FilterReports filters={filterValues}/>
-            {
-                (tableValues && !aLotOf) ? 
-                <TableWithData tableValues={tableValues}/> : 
-                aLotOf ? 
-                <Empty description={
-                    <Typography style={cardTitle}>Слишком много значений</Typography>
-                }/> : 
-                <Empty description={
-                    <Typography style={cardTitle}>Пусто</Typography>
-                }/>
-            }
+            <Row>
+                <Col>
+                    {
+                        (tableValues && !aLotOf) ? 
+                        <TableWithData tableValues={tableValues}/> : 
+                        aLotOf ? 
+                        <Empty description={
+                            <Typography style={cardTitle}>Слишком много значений</Typography>
+                        }/> : 
+                        <Empty description={
+                            <Typography style={cardTitle}>Пусто</Typography>
+                        }/>
+                    }
+                </Col>
+            </Row>
+            
             {/*(inspections && pageInfo && pageInfo.current <= pageInfo.count) ? 
             <>
                 <FilterBlockConsultation filterValues={filterValues}/>
