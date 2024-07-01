@@ -18,10 +18,11 @@ import { baseUrl } from "../../const/constValues";
 import { useLogin } from "../../context/LoginContext";
 import { useName } from "../../context/NameContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import { RootState } from "../../reducers";
 import { useSelector } from "react-redux";
+import { fetchProfile } from "../../actions/ProfileActions";
+import { RootState, useAppDispatch } from "../../stores/store";
 
-type FieldType = {
+export type ProfileType = {
     email?: string;
     name?: string;
     gender?: string;
@@ -33,10 +34,12 @@ const {Paragraph, Title} = Typography;
 
 function ProfileCard()
 {
-    const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
+    const {isLogin, setIsLogin} = useLogin();
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
-    const [currentProfile, setCurrentProfile] = useState<FieldType>();
+    const dispatch = useAppDispatch();
+    const [currentProfile, setCurrentProfile] = useState<ProfileType>();
+    //const {currentProfile, loading, error} = useSelector((state: RootState) => state.profile);
     
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,7 +69,25 @@ function ProfileCard()
 
     }, [isLogin])
 
-    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    /*useEffect(() => {
+        dispatch(fetchProfile());
+    },[dispatch])*/
+
+    useEffect(() => {
+        if (currentProfile)
+        {
+            form.setFieldsValue({
+                name: currentProfile.name,
+                gender: currentProfile.gender,
+                birthday: currentProfile.birthday ? dayjs(currentProfile.birthday) : null,
+                phone: currentProfile.phone,
+                email: currentProfile.email,
+            });
+        }
+        
+    },[currentProfile])
+
+    const onFinish: FormProps<ProfileType>['onFinish'] = (values) => {
         if (values.birthday) {
             values.birthday = dayjs(values.birthday).format('YYYY-MM-DD');
         }
@@ -113,7 +134,7 @@ function ProfileCard()
         })
     };
 
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    const onFinishFailed: FormProps<ProfileType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 

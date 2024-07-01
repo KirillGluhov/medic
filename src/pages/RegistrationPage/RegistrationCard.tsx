@@ -18,6 +18,7 @@ import { baseUrl } from "../../const/constValues";
 import { useLogin } from "../../context/LoginContext";
 import { useName } from "../../context/NameContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 interface item {
     id: string,
@@ -41,6 +42,7 @@ function RegistrationCard()
 {
     const navigate = useNavigate();
     const {isLogin, setIsLogin} = useLogin();
+    //const dispatch = useDispatch();
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
     const [specilities, setSpecialities] = useState<Array<item>>([]);
@@ -56,6 +58,7 @@ function RegistrationCard()
             console.log(response);
             localStorage.setItem("token", response.data.token);
             setIsLogin(true);
+            //dispatch(setIsLogin(true));
 
             axios.get(baseUrl + "doctor/profile",
                 { 

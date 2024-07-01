@@ -8,14 +8,13 @@ import { useLogin } from "../../context/LoginContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MainPartOfPatients from "./MainPartOfPatients";
-import { useSelector } from "react-redux";
-import { RootState } from "../../reducers";
 
 const { Content } = Layout;
 
 function Patients()
 {
     const {isLogin, setIsLogin} = useLogin();
+    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {

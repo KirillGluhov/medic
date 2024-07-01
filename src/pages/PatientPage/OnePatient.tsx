@@ -5,14 +5,13 @@ import HeaderMain from "../../components/HeaderMain";
 import { Flex, Layout } from "antd";
 import { loginCardWrapper, styleForWrapperContent } from "../../styles/additionalStyles";
 import CardCurrentPatient from "./CardCurrentPatient";
-import { useSelector } from "react-redux";
-import { RootState } from "../../reducers";
 
 const { Header, Footer, Sider, Content } = Layout;
 
 function OnePatient()
 {
     const {isLogin, setIsLogin} = useLogin();
+    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {

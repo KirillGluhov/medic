@@ -11,6 +11,7 @@ const { Content } = Layout;
 function CreationOfInspections()
 {
     const {isLogin, setIsLogin} = useLogin();
+    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {

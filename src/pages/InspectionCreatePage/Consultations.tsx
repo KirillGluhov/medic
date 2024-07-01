@@ -21,6 +21,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../const/constValues";
+import { useSelector } from "react-redux";
+import { RootState } from "../../stores/store";
 
 const {TextArea} = Input;
 
@@ -29,7 +31,7 @@ interface ConsultationsProps
     form: FormInstance<any>;
 }
 
-interface Specialty {
+export interface Specialty {
     id: string,
     name: string,
     createTime: string

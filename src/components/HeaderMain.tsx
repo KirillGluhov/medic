@@ -33,10 +33,6 @@ import {ScullIcon} from "../icons/Scull";
 import { useLogin } from '../context/LoginContext';
 import { baseUrl } from '../const/constValues';
 import { useName } from '../context/NameContext';
-import { useSelector } from 'react-redux';
-import { RootState } from '../reducers';
-import { useDispatch } from 'react-redux';
-import { setIsLogin } from '../actions/LoginActions';
 
 const {Header} = Layout;
 const {Paragraph, Title} = Typography;
@@ -48,6 +44,8 @@ function HeaderMain()
 
     const {isName, setIsName} = useName();
     const {isLogin, setIsLogin} = useLogin();
+    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
+    //const dispatch = useDispatch();
 
     const handleProfile = () => {
         if (isLogin)
@@ -71,6 +69,7 @@ function HeaderMain()
         console.log(response);
         localStorage.clear();
         setIsLogin(false);
+        //dispatch(setIsLogin(false));
         setIsName('');
         navigate('/login/')
 
@@ -80,6 +79,7 @@ function HeaderMain()
         console.log(error);
         localStorage.removeItem("token");
         setIsLogin(false);
+        //dispatch(setIsLogin(false));
         setIsName('');
         navigate('/login/')
       })

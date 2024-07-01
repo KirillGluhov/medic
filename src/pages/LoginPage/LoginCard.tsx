@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { chooseErrorMessage } from '../../functions/smallFunctions';
 import { useLogin } from '../../context/LoginContext';
 import { useName } from '../../context/NameContext';
+import { useDispatch } from 'react-redux';
 
 const {Title} = Typography;
 
@@ -27,6 +28,7 @@ function LoginCard()
 {
     const [form] = Form.useForm();
     const {isLogin, setIsLogin} = useLogin();
+    //const dispatch = useDispatch();
     const {isName, setIsName} = useName();
     const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ function LoginCard()
             console.log(response);
             localStorage.setItem("token", response.data.token);
             setIsLogin(true);
+            //dispatch(setIsLogin(true))
 
             axios.get(baseUrl + "doctor/profile",
                 { 
