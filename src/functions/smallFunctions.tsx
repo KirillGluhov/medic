@@ -266,12 +266,15 @@ export function getTitleString(start: string | undefined, end: string | undefine
 
 export async function getDiagnosId(description: string): Promise<string | null>
 {
-    const code = description.split(" ")[0];
+    const code = description;
+    console.log("Coooode", code);
 
     try 
     {
         const response = await axios.get(baseUrl + `dictionary/icd10?request=${code}&page=1&size=5`);
+        console.log("uuuurl", baseUrl + `dictionary/icd10?request=${code}&page=1&size=5`)
         const records = response.data.records;
+        console.log("Recccccords", records);
         return (Array.isArray(records) && records.length > 0) ? response.data.records[0].id : null;
     } 
     catch (error) 

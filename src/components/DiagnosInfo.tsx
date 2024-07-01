@@ -23,6 +23,7 @@ import { DiagnosisModel, InspectionPreview } from "./InspectionWrapper";
 import { findType } from "../functions/smallFunctions";
 import { PlusOutlined } from "@ant-design/icons";
 import { DiagnosisFullModel } from "./DetailsInspection";
+import { StrangeDiagnos } from "./ModalInspection";
 
 const { Option } = AutoComplete;
 
@@ -30,7 +31,7 @@ interface DiagnosProps
 {
     form: FormInstance<any>;
     previousInspectionId?: string;
-    diagnosises?: DiagnosisFullModel[]
+    diagnosises?: StrangeDiagnos[]
 }
 
 interface ICD
@@ -183,7 +184,7 @@ const DiagnosInfo: React.FC<DiagnosProps> = ({form, previousInspectionId, diagno
                                         })),
                                         ...(diagnosises && diagnosises[key] ? [
                                           {
-                                            value: diagnosises[key].id,
+                                            value: diagnosises[key].icdDiagnosisId,
                                             label: DisplayElement(diagnosises[key].code + " - " + diagnosises[key].name)
                                           }
                                         ] : [])

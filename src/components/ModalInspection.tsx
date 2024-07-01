@@ -12,8 +12,20 @@ import DiagnosInfo from "./DiagnosInfo";
 import ChangeOrDelete from "./ChangeOrDelete";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
+import { getDiagnosId } from "../functions/smallFunctions";
 
 const {Title} = Typography
+
+export interface StrangeDiagnos
+{
+    type: "Main" | "Concomitant" | "Complication",
+    description?: string,
+    icdDiagnosisId: string | null,
+    id: string,
+    name: string,
+    code: string,
+    createTime: string
+}
 
 interface ModalInspectionProps
 {
@@ -42,6 +54,7 @@ const ModalInspection: React.FC<ModalInspectionProps> = ({inspection, reGet, sho
 {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [temporaryDiagnoses, setTemporaryDiagnoses] = useState<StrangeDiagnos[] | undefined>([]);
 
     const onFinish: FormProps<FormTypes>['onFinish'] = (values) => {
         console.log('Success:', values);
@@ -81,8 +94,22 @@ const ModalInspection: React.FC<ModalInspectionProps> = ({inspection, reGet, sho
         console.log('Failed:', errorInfo);
     };
 
-    const showModal = () => {
+    const showModal = async() => {
+
         setIsModalOpen(true);
+
+        const diagnoses: StrangeDiagnos[] | undefined = inspection.diagnoses ? await Promise.all(inspection.diagnoses.map(async (diag) => ({
+            type: diag.type,
+            description: diag.description,
+            icdDiagnosisId: await getDiagnosId(diag.code ? diag.code : ""),
+            id: diag.id,
+            name: diag.name,
+            code: diag.code,
+            createTime: diag.createTime
+        }))) : undefined;
+
+        setTemporaryDiagnoses(diagnoses);
+
         form.setFieldsValue({
             complaints: inspection.complaints,
             anamnesis: inspection.anamnesis,
@@ -90,11 +117,7 @@ const ModalInspection: React.FC<ModalInspectionProps> = ({inspection, reGet, sho
             conclusion: inspection.conclusion,
             nextVisitDate: inspection.nextVisitDate ? dayjs(inspection.nextVisitDate) : undefined,
             deathDate: inspection.deathDate ? dayjs(inspection.deathDate) : undefined,
-            diagnoses: (inspection.diagnoses) ? inspection.diagnoses.map((diag) => ({
-                type: diag.type,
-                description: diag.description,
-                icdDiagnosisId: diag.id
-            })) : undefined
+            diagnoses: diagnoses
         });
     };
     
@@ -148,7 +171,7 @@ const ModalInspection: React.FC<ModalInspectionProps> = ({inspection, reGet, sho
                         <Treatment  />
                     </Col>
                     <Col span={24}>
-                        <DiagnosInfo form={form} previousInspectionId={inspection.previousInspectionId} diagnosises={inspection.diagnoses}/>
+                        <DiagnosInfo form={form} previousInspectionId={inspection.previousInspectionId} diagnosises={temporaryDiagnoses}/>
                     </Col>
                     <Col span={24}>
                         <Conclusion form={form} fromModal={true}/>
