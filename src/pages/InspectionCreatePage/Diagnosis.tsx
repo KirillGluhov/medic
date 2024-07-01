@@ -127,13 +127,10 @@ const Diagnosis: React.FC<DiagnosisProps> = ({form}) =>
         const diagnoses = form.getFieldValue('diagnoses') || [];
         const typeFirst = form.getFieldValue('typeFirst') || null;
     
-        if (previousInspectionId === undefined)
-        {
-            const hasMain = typeFirst === 'Main' || diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
+        const hasMain = typeFirst === 'Main' || diagnoses.some((diag: { type?: string; }) => diag?.type === 'Main');
 
-            if (!hasMain) {
-                return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
-            }
+        if (!hasMain) {
+            return Promise.reject(new Error('Хотя бы один диагноз должен быть основным'));
         }
     
         return Promise.resolve();

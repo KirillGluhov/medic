@@ -23,8 +23,8 @@ function Reports()
     return (
         <>
             <HeaderMain/>
-            <Flex style={loginCardWrapper}>
-                <Content style={styleForWrapperContent}>
+            <Flex style={{...loginCardWrapper}}>
+                <Content style={{...styleForWrapperContent}}>
                     <ReportsFilterAndTable/>
                 </Content>
             </Flex>

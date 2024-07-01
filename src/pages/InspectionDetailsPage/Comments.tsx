@@ -6,7 +6,8 @@ import {
     smallestMarginBottom, 
     titleInOneBlockStyle, 
     titleSmallStyle, 
-    withoutPaddingTop
+    withoutPaddingTop,
+    smallMarginTop
 } from "../../styles/additionalStyles";
 import { InspectionConsultationModel } from "./DetailsInspection";
 import React from "react";
@@ -26,7 +27,7 @@ const Comments: React.FC<CommentsProps> = ({consultations}) =>
         {consultations && consultations.map((cons, i) => (
             <React.Fragment key={i}>
                 <Typography.Paragraph 
-                    style={{...titleSmallStyle, ...smallestMarginBottom}}
+                    style={{...titleSmallStyle, ...smallestMarginBottom, ...smallMarginTop}}
                 >
                     Консультант: {cons.rootComment?.author?.name}
                 </Typography.Paragraph>
