@@ -28,7 +28,6 @@ function LoginCard()
 {
     const [form] = Form.useForm();
     const {isLogin, setIsLogin} = useLogin();
-    //const dispatch = useDispatch();
     const {isName, setIsName} = useName();
     const navigate = useNavigate();
 
@@ -43,7 +42,6 @@ function LoginCard()
             console.log(response);
             localStorage.setItem("token", response.data.token);
             setIsLogin(true);
-            //dispatch(setIsLogin(true))
 
             axios.get(baseUrl + "doctor/profile",
                 { 

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 function Profile()
 {
     const {isLogin, setIsLogin} = useLogin();
-    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {

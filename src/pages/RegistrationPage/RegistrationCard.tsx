@@ -42,7 +42,6 @@ function RegistrationCard()
 {
     const navigate = useNavigate();
     const {isLogin, setIsLogin} = useLogin();
-    //const dispatch = useDispatch();
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
     const [specilities, setSpecialities] = useState<Array<item>>([]);

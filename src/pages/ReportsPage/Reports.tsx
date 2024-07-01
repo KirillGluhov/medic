@@ -11,7 +11,6 @@ const { Content } = Layout;
 function Reports()
 {
     const {isLogin, setIsLogin} = useLogin();
-    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {

@@ -11,7 +11,6 @@ const { Header, Footer, Sider, Content } = Layout;
 function OnePatient()
 {
     const {isLogin, setIsLogin} = useLogin();
-    //const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const navigate = useNavigate();
     
     useEffect(() => {
