@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import "../src/styles/main.css";
-import Authorization from './pages/Authorization';
+import Authorization from './pages/LoginPage/Authorization';
 import { useLogin } from './context/LoginContext';
 import { useName } from './context/NameContext';
-import Registration from './pages/Registration';
-import Profile from './pages/Profile';
-import Patients from './pages/Patients';
-import OnePatient from './pages/OnePatient';
-import CreationOfInspections from './pages/CreationOfInspection';
-import Consultations from './pages/Consultations';
-import Inspection from './pages/Inspection';
-import Reports from './pages/Reports';
+import Registration from './pages/RegistrationPage/Registration';
+import Profile from './pages/ProfilePage/Profile';
+import Patients from './pages/PatientsPage/Patients';
+import OnePatient from './pages/PatientPage/OnePatient';
+import Consultations from './pages/ConsultationsPage/Consultations';
+import Reports from './pages/ReportsPage/Reports';
+import CreationOfInspections from './pages/InspectionCreatePage/CreationOfInspection';
+import Inspection from './pages/InspectionDetailsPage/Inspection';
 
 function App()
 {

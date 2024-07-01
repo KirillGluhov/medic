@@ -1,7 +1,7 @@
 import axios from "axios";
-import { icd10 } from "../components/CardCurrentPatient";
+import { icd10 } from "../pages/PatientPage/CardCurrentPatient";
 import { baseUrl } from "../const/constValues";
-import { Consultation, Diagnoses } from "../components/CreationInspectionFormWrapper";
+import { Consultation, Diagnoses } from "../pages/InspectionCreatePage/CreationInspectionFormWrapper";
 import dayjs from "dayjs";
 import { ManOutlined, WomanOutlined } from "@ant-design/icons";
 import { genderMainStyle, genderStyle } from "../styles/additionalStyles";
