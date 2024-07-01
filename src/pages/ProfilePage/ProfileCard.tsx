@@ -34,12 +34,12 @@ const {Paragraph, Title} = Typography;
 
 function ProfileCard()
 {
+    const {profile, loading, error} = useSelector((state: RootState) => state.profile);
     const {isLogin, setIsLogin} = useLogin();
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
     const [currentProfile, setCurrentProfile] = useState<ProfileType>();
-    //const {currentProfile, loading, error} = useSelector((state: RootState) => state.profile);
     
     const navigate = useNavigate();
     const location = useLocation();
@@ -65,6 +65,7 @@ function ProfileCard()
             });
         }).catch(error => {
             console.log(error)
+            dispatch(fetchProfile());
         })
 
     }, [isLogin])
