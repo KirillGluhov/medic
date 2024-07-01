@@ -5,6 +5,7 @@ import { InspectionConsultationModel } from "./DetailsInspection";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../const/constValues";
+import ComentsWrapperInner from "./CommentsWrapperInner";
 
 type SpecialityModel = {
     id: string,
@@ -38,7 +39,7 @@ interface CommentsWrapperProps
 const CommentsWrapper: React.FC<CommentsWrapperProps> = ({consultation}) =>
 {
     const [commentsInfo, setCommentsInfo] = useState<ConsultationModel | null>(null);
-    const [isOpen, setIsOpen] = useState(false);
+    
 
     const messageSuccess = (value: string) => {
         message.success(value);
@@ -86,20 +87,19 @@ const CommentsWrapper: React.FC<CommentsWrapperProps> = ({consultation}) =>
     return (<>
     <Typography style={styleForCommentary}>Комментарии</Typography>
     {
-        commentsInfo && commentsInfo.comments && commentsInfo.comments.map((comment, index) => (
-            <Comment 
-                index={index} 
-                comment={comment} 
-                specialityName={commentsInfo?.speciality?.name} 
-                numberComments={commentsInfo.comments?.length}
-                changeOpen={setIsOpen}
-                isOpen={isOpen}
-                consultationId={commentsInfo.id}
-                repeatConsultation={repeatConsultation}
-                messageSuccess={messageSuccess}
-                messageError={messageError}
-            />
-        ))
+        commentsInfo && 
+        commentsInfo.comments
+        &&
+        <ComentsWrapperInner 
+            comm={commentsInfo.comments[0]} 
+            index={0}
+            comments={commentsInfo.comments} 
+            messageSuccess={messageSuccess}
+            messageError={messageError}
+            repeatConsultation={repeatConsultation}
+            consultationId={commentsInfo.id}
+            specialityName={commentsInfo?.speciality?.name} 
+        />
     }
     </>)
 }

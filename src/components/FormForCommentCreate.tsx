@@ -6,7 +6,7 @@ import { error } from "console";
 
 interface FormForCommentCreateProps
 {
-    parentId: string,
+    parentId?: string,
     consultationId: string,
     setAnswer: React.Dispatch<React.SetStateAction<boolean>>,
     repeatConsultation: () => void,
@@ -78,7 +78,7 @@ const FormForCommentCreate: React.FC<FormForCommentCreateProps> = (
             onFinishFailed={onFinishFailed}
         >
             <Row gutter={[10, 10]}>
-                <Col span={20}>
+                <Col xxl={20} xl={18} lg={18} md={16} span={24}>
                     <Form.Item
                         name="content"
                         rules={[
@@ -94,7 +94,7 @@ const FormForCommentCreate: React.FC<FormForCommentCreateProps> = (
                         />
                     </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col xxl={4} xl={6} lg={6} md={8} span={24}>
                 <Form.Item
                     style={{marginBottom: 5}}
                 >
@@ -105,7 +105,10 @@ const FormForCommentCreate: React.FC<FormForCommentCreateProps> = (
                         style={
                             {
                                 ...cardButtonStyle, 
-                                ...boldText
+                                ...boldText,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
                             }
                         }
                     >Оставить комментарий</Button>

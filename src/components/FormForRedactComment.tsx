@@ -7,8 +7,8 @@ import { baseUrl } from "../const/constValues";
 
 interface FormForRedactCommentProps
 {
-    textContent: string,
-    commentId: string,
+    textContent?: string,
+    commentId?: string,
     messageSuccess: (value: string) => void,
     messageError: (value: string) => void,
     repeatConsultation: () => void,
@@ -70,7 +70,7 @@ const FormForRedactComment: React.FC<FormForRedactCommentProps> = (
             onFinishFailed={onFinishFailed}
         >
             <Row gutter={[10, 10]}>
-                <Col span={20}>
+                <Col xxl={20} xl={18} lg={18} md={16} span={24}>
                     <Form.Item
                         name="content"
                         rules={[
@@ -86,7 +86,7 @@ const FormForRedactComment: React.FC<FormForRedactCommentProps> = (
                         />
                     </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col xxl={4} xl={6} lg={6} md={8} span={24}>
                 <Form.Item
                     style={{marginBottom: 5}}
                 >

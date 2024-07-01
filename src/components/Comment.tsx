@@ -24,28 +24,28 @@ import FormForRedactComment from "./FormForRedactComment";
 interface CommentProps
 {
     index: number,
-    comment: CommentModel,
+    comment: CommentModel | null,
     specialityName?: string,
-    numberComments?: number,
-    changeOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    isOpen: boolean,
     consultationId: string,
+    numberComments: number,
     repeatConsultation: () => void,
     messageSuccess: (value: string) => void,
-    messageError: (value: string) => void
+    messageError: (value: string) => void,
+    isOpen: boolean,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Comment: React.FC<CommentProps> = ({
     index, 
     comment, 
-    specialityName, 
-    numberComments, 
-    changeOpen, 
-    isOpen, 
+    specialityName,  
     consultationId, 
+    numberComments,
     repeatConsultation,
     messageSuccess,
-    messageError
+    messageError,
+    isOpen,
+    setIsOpen
 }) =>
 {
     const [answer, setAnswer] = useState(false);
@@ -53,12 +53,12 @@ const Comment: React.FC<CommentProps> = ({
     
     return (
     <Flex 
-        style={{...columnStyle, ...(index == 0 ? mainCommentStyle : commentStyleWithMargin), ...((isOpen || index == 0) ? displayFlex : displayNone)}} 
-        className={index == 1 ? "LElement downLineSmaller" : index == 0 ? "downLine" : "downLineSmaller"}
+        style={{...columnStyle, marginLeft: `${index*20}px`, ...(displayFlex)}} 
+        className={index >= 1 ? "LElement" : "" }
     >
         <Row style={smallRight} gutter={[5,5]}>
             <Col>
-                <Typography style={boldText}>{comment.author}</Typography>
+                <Typography style={boldText}>{comment?.author}</Typography>
             </Col>
             <Col>
                 <Typography style={grayText}>{`(${specialityName ? specialityName.toLowerCase() : null})`}</Typography>
@@ -69,8 +69,8 @@ const Comment: React.FC<CommentProps> = ({
             <Row style={biggerRight} gutter={[5,5]}>
                 <Col span={24}>
                     <FormForRedactComment 
-                        textContent={comment.content} 
-                        commentId={comment.id} 
+                        textContent={comment?.content} 
+                        commentId={comment?.id} 
                         messageSuccess={messageSuccess}
                         messageError={messageError}
                         repeatConsultation={repeatConsultation}
@@ -80,26 +80,26 @@ const Comment: React.FC<CommentProps> = ({
             </Row> : 
             <Row style={biggerRight} gutter={[5,5]}>
                 <Col>
-                    <Typography>{comment.content}</Typography>
+                    <Typography>{comment?.content}</Typography>
                 </Col>
                 <Col>
-                {(comment.modifiedDate !== comment.createTime) ? <Tooltip placement="topRight" title={comment.modifiedDate ? changeFormatToDateAndTime(comment.modifiedDate) : null}>
+                {(comment?.modifiedDate !== comment?.createTime) ? <Tooltip placement="topRight" title={comment?.modifiedDate ? changeFormatToDateAndTime(comment.modifiedDate) : null}>
                     <Typography style={justGray} className="onHover">(изменено)</Typography>
                 </Tooltip> : null}
                 </Col>
             </Row>
         }
-        <Row style={{...smallRight, ...alignCenter}} className="downSmallLine">
+        <Row style={{...smallRight, ...alignCenter}} className={answer ? "" : "downLineMain"}>
             <Col>
-                <Typography style={{...justGray, ...marginBottom1}}>{comment.createTime ? changeFormatToDateAndTime(comment.createTime) : null}</Typography>
+                <Typography style={{...justGray, ...marginBottom1}}>{comment?.createTime ? changeFormatToDateAndTime(comment.createTime) : null}</Typography>
             </Col>
-            {(index == 0 && numberComments && numberComments > 1) ? <Col>
+            {(numberComments > 0) ? <Col>
                 <Button 
                     type="link" 
                     style={blueColorStyle} 
-                    onClick={() => changeOpen(!isOpen)} 
+                    onClick={() => {setIsOpen(!isOpen); console.log("IIIndex", index, "IIId", comment?.id)}}
                     size="small"
-                >{isOpen ? `Скрыть ответы` : `Показать все (${numberComments-1})`}</Button>
+                >{isOpen ? `Скрыть комментарии` : `Показать все (${numberComments})`}</Button>
             </Col> : null}
             <Col>
                 <Button 
@@ -109,7 +109,7 @@ const Comment: React.FC<CommentProps> = ({
                     onClick={() => {setAnswer(!answer)}}
                 >Ответить</Button>
             </Col>
-            {(localStorage.getItem("me") === comment.authorId) ? <Col>
+            {(localStorage.getItem("me") === comment?.authorId) ? <Col>
                 <Button 
                     type="link" 
                     style={blueColorStyle} 
@@ -118,10 +118,10 @@ const Comment: React.FC<CommentProps> = ({
                 >Редактировать</Button>
             </Col> : null}
         </Row>
-        {answer ? <Row>
+        {answer ? <Row className="downLineMainAdd">
             <Col span={24}>
                 <FormForCommentCreate 
-                    parentId={comment.id} 
+                    parentId={comment?.id} 
                     consultationId={consultationId}
                     setAnswer={setAnswer}
                     repeatConsultation={repeatConsultation}
