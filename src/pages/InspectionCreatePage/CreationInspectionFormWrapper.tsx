@@ -18,6 +18,8 @@ import { collectDiagnoses, collectConsultations } from "../../functions/smallFun
 import axios from "axios";
 import { baseUrl } from "../../const/constValues";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducers";
 
 export type Consultation = {
     specialityId: string,
@@ -61,12 +63,10 @@ function CreationInspectionFormWrapper()
 
     const navigate = useNavigate();
     
-    const [Patient, setPatient] = useState(() => {
-        return localStorage.getItem("patient") || ''
-    })
+    const Patient = useSelector((state: RootState) => state.patient.patientId);
 
     useEffect(() => {
-        axios.get(baseUrl + `patient/${localStorage.getItem("patient")}/inspections?grouped=true&page=1&size=1`, 
+        axios.get(baseUrl + `patient/${Patient}/inspections?grouped=true&page=1&size=1`, 
         { 
             headers: { 
                 'Authorization': `Bearer ${localStorage.getItem("token")}` 

@@ -20,6 +20,8 @@ import axios from "axios";
 import { baseUrl } from "../../const/constValues";
 import { useLocation, useNavigate } from "react-router-dom";
 import { changeFormat } from "../../functions/smallFunctions";
+import { useDispatch } from "react-redux";
+import { setPatientId } from "../../actions/patientActions";
 
 const {Paragraph, Title} = Typography;
 
@@ -38,6 +40,8 @@ type PatientMainInfoProps = {
 
 const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
 {
+    const dispatch = useDispatch();
+
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -69,7 +73,7 @@ const PatientMainInfo: React.FC<PatientMainInfoProps> = ({setPatientInfo}) =>
             console.log(response);
             setPatientInfo(response.data)
             setLocalPatientInfo(response.data);
-            localStorage.setItem("patient", response.data.id);
+            dispatch(setPatientId(response.data.id));
         })
         .catch(error => {
             console.log(error);
