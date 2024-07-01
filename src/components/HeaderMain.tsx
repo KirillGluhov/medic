@@ -33,6 +33,10 @@ import {ScullIcon} from "../icons/Scull";
 import { useLogin } from '../context/LoginContext';
 import { baseUrl } from '../const/constValues';
 import { useName } from '../context/NameContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reducers';
+import { useDispatch } from 'react-redux';
+import { setIsLogin } from '../actions/LoginActions';
 
 const {Header} = Layout;
 const {Paragraph, Title} = Typography;
@@ -41,8 +45,9 @@ function HeaderMain()
 {
     const navigate = useNavigate();
     const [hover, setHover] = useState(false);
-    const {isLogin, setIsLogin} = useLogin();
+
     const {isName, setIsName} = useName();
+    const {isLogin, setIsLogin} = useLogin();
 
     const handleProfile = () => {
         if (isLogin)

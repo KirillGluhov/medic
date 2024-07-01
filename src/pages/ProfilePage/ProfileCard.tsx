@@ -18,6 +18,8 @@ import { baseUrl } from "../../const/constValues";
 import { useLogin } from "../../context/LoginContext";
 import { useName } from "../../context/NameContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import { RootState } from "../../reducers";
+import { useSelector } from "react-redux";
 
 type FieldType = {
     email?: string;
@@ -31,7 +33,7 @@ const {Paragraph, Title} = Typography;
 
 function ProfileCard()
 {
-    const {isLogin, setIsLogin} = useLogin();
+    const isLogin = useSelector((state: RootState) => state.isLogin.isLogin);
     const {isName, setIsName} = useName();
     const [form] = Form.useForm();
     const [currentProfile, setCurrentProfile] = useState<FieldType>();

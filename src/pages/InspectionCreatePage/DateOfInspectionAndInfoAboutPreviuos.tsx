@@ -24,8 +24,6 @@ import { changeFormat, changeFormatToDateAndTime, deleteLastSemicolon } from "..
 import { FormInstance } from "antd/lib";
 import dayjs from "dayjs";
 import { DiagnosisModel, InspectionPreview } from "../PatientPage/InspectionWrapper";
-import { useSelector } from "react-redux";
-import { RootState } from "../../reducers";
 
 const {Paragraph} = Typography;
 
@@ -57,7 +55,9 @@ const DateOfInspectionAndInfoAboutPreviuos: React.FC<DateOfInspectionAndInfoAbou
         return localStorage.getItem('inspection') || ''
     });
 
-    const Patient = useSelector((state: RootState) => state.patient.patientId);
+    const [Patient, setPatient] = useState(() => {
+        return localStorage.getItem("patient") || ''
+    })
 
     const isRepeatInspectionValue = Form.useWatch('isRepeatInspection', form);
 

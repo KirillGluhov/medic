@@ -6,7 +6,7 @@ import { Flex, Layout } from "antd";
 import { loginCardWrapper, styleForWrapperContent } from "../../styles/additionalStyles";
 import ConsultationCard from "./ConsultationCard";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 
 function Consultations()
 {

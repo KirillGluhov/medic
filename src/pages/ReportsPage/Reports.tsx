@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../context/LoginContext";
 import ReportsFilterAndTable from "./ReportsFilterAndTable";
+import { RootState } from "../../reducers";
+import { useSelector } from "react-redux";
 
 const { Content } = Layout;
 
