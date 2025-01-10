@@ -13,22 +13,24 @@ import {
     spanStyle,
 } from "../../styles/additionalStyles";
 import { useNavigate } from 'react-router-dom';
-import { generateValues } from "../../functions/smallFunctions";
 import { useEffect } from "react";
 import type { FormProps } from 'antd';
+import { generateValues } from "../../functions/generateValues";
 
 const {Title} = Typography;
 
 interface FilterCardProps
 {
-    filterValues: {
-        name?: string;
-        conclusions?: string[];
-        scheduledVisits?: boolean;
-        onlyMine?: boolean;
-        sorting?: string;
-        size?: number
-    };
+    filterValues: FilterPropsType;
+}
+
+export type FilterPropsType = {
+    name?: string;
+    conclusions?: string[];
+    scheduledVisits?: boolean;
+    onlyMine?: boolean;
+    sorting?: string;
+    size?: number
 }
 
 type FilterType = {
@@ -308,8 +310,8 @@ const FilterCard: React.FC<FilterCardProps> = ({filterValues}) =>
                                 { value: 'NameDesc', label: 'По имени (Я-А)' },
                                 { value: 'CreateAsc', label: 'По дате создания (Сначала старые)' },
                                 { value: 'CreateDesc', label: 'По дате создания (Сначала новые)' },
-                                { value: 'CreateAsc', label: 'По дате осмотров (Сначала старые)' },
-                                { value: 'CreateDesc', label: 'По дате осмотров (Сначала новые)' },
+                                { value: 'InspectionAsc', label: 'По дате осмотров (Сначала старые)' },
+                                { value: 'InspectionDesc', label: 'По дате осмотров (Сначала новые)' },
                             ]}
                             style={{...cardSizeStyle}}
                         >

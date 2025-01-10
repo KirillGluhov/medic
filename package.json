@@ -4,9 +4,10 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
     "@reduxjs/toolkit": "^2.2.6",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.97",
@@ -15,10 +16,12 @@
     "@types/react-redux": "^7.1.33",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "ant-design-testing": "^2.0.0",
     "antd": "^5.18.0",
     "antd-mask-input": "^2.0.7",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
+    "jest-environment-jsdom": "^29.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-imask": "^7.6.1",
@@ -56,6 +59,10 @@
     ]
   },
   "devDependencies": {
-    "@types/react-input-mask": "^3.0.5"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
+    "@types/react-input-mask": "^3.0.5",
+    "jest": "^27.5.1"
   }
 }

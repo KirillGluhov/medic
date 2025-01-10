@@ -10,7 +10,8 @@ import {
     smallWidth,
     darkerBlueColor
 } from "../../styles/additionalStyles";
-import { existTypeOfICD, generateValues } from "../../functions/smallFunctions";
+import { existTypeOfICD } from "../../functions/smallFunctions";
+import { generateValues } from "../../functions/generateValues";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../const/constValues";

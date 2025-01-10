@@ -4,8 +4,7 @@ import { baseUrl } from "../const/constValues";
 import { Consultation, Diagnoses } from "../pages/InspectionCreatePage/CreationInspectionFormWrapper";
 import dayjs from "dayjs";
 import { ManOutlined, WomanOutlined } from "@ant-design/icons";
-import { genderMainStyle, genderStyle } from "../styles/additionalStyles";
-import { error } from "console";
+import { genderMainStyle } from "../styles/additionalStyles";
 
 export function chooseErrorMessage(errorMessage: string)
 {
@@ -15,14 +14,6 @@ export function chooseErrorMessage(errorMessage: string)
         default:
             return errorMessage;
     }
-}
-
-export function generateValues(start: number, end: number)
-{
-    return Array.from({ length: end - start + 1 }, (_, i) => {
-        const value = (start + i).toString();
-        return { value, label: value };
-    });
 }
 
 export function isNaturalNumberInRange(value: string, min: number, max: number)
